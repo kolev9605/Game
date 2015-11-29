@@ -1,2 +1,8 @@
 # Game
-Project given from Softuni to create an OOP game.
+Project given from softuni. Create OOP oriented game.
+
+# Contributors
+sideroff - Ivan Siderov
+kolev9605 - Georgi Kolev
+iludart - Peter Penev
+
