@@ -2,10 +2,10 @@
 
 namespace Teamwork_OOP.Maps
 {
-    public class Grass : Tile
+    public class Grass : Tile 
     {
-        public Grass(Texture2D texture2D) 
-            : base(texture2D)
+        public Grass(string path) 
+            : base(path)
         {
         }
     }

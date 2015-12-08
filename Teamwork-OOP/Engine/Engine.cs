@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Teamwork_OOP.Screens;
+using Teamwork_OOP.States;
 
 namespace Teamwork_OOP.Engine
 {

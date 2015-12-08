@@ -1,10 +1,9 @@
-﻿using System.IO;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Teamwork_OOP.Screens
+namespace Teamwork_OOP.States
 {
-    public class SplashScreen : GameScreen
+    public class GameState : State
     {
         private Texture2D image;
         private string path;
@@ -17,7 +16,6 @@ namespace Teamwork_OOP.Screens
             this.image = this.content.Load<Texture2D>(this.path);
             this.pos.X = 200;
             this.pos.Y = 300;
-
         }
 
         public override void UnloadContent()
@@ -31,7 +29,7 @@ namespace Teamwork_OOP.Screens
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(this.image, pos, Color.AliceBlue);
+            spriteBatch.Draw(this.image, this.pos, Color.AliceBlue);
         }
     }
 }

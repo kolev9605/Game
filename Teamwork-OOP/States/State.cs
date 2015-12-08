@@ -1,11 +1,10 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Teamwork_OOP.Screens
+namespace Teamwork_OOP.States
 {
-    public abstract class GameScreen
+    public abstract class State
     {
         protected ContentManager content;
 

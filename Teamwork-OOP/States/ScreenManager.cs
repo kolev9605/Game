@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Teamwork_OOP.Screens
+namespace Teamwork_OOP.States
 {
     public class ScreenManager
     {
@@ -10,7 +10,7 @@ namespace Teamwork_OOP.Screens
         public Vector2 Dimention { get; private set; }
         public ContentManager Content { get; private set; }
 
-        private GameScreen currentScreen;
+        private State currentScreen;
 
         public static ScreenManager Instance
         {
@@ -27,7 +27,7 @@ namespace Teamwork_OOP.Screens
         public ScreenManager()
         {
             this.Dimention = new Vector2(630, 480);
-            this.currentScreen = new SplashScreen();
+            this.currentScreen = new GameState();
         }
 
         public void LoadContent(ContentManager Content)

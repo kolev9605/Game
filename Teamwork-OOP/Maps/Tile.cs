@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Teamwork_OOP.Maps
 {
-    public abstract class Tile
+    public abstract class Tile 
     {
         private const int width = 50;
         private const int height = 50;
@@ -16,7 +16,7 @@ namespace Teamwork_OOP.Maps
 
         protected Tile(string path)
         {
-            this.Texture2D = this.conte
+            
         }
 
         public Texture2D Texture2D { get; set; }
