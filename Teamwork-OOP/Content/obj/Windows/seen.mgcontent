@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <SourceFile>C:/My Data/Projects/Softuni/OOP/Projects/Teamwork-OOP/Teamwork-OOP/Content/seen.PNG</SourceFile>
+  <SourceFile>C:/Users/Kolev/Desktop/Github/Game/Teamwork-OOP/Content/seen.PNG</SourceFile>
   <SourceTime>2015-06-13T20:39:52+03:00</SourceTime>
-  <DestFile>C:/My Data/Projects/Softuni/OOP/Projects/Teamwork-OOP/Teamwork-OOP/Content/bin/Windows/seen.xnb</DestFile>
-  <DestTime>2015-12-07T00:13:22.5181424+02:00</DestTime>
+  <DestFile>C:/Users/Kolev/Desktop/Github/Game/Teamwork-OOP/Content/bin/Windows/seen.xnb</DestFile>
+  <DestTime>2015-12-08T00:01:12.632431+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2015-04-29T20:14:44+03:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

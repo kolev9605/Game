@@ -8,12 +8,15 @@ namespace Teamwork_OOP.Screens
     {
         private Texture2D image;
         private string path;
+        private Vector2 pos;
 
         public override void LoadContent()
         {
             base.LoadContent();
             this.path = "seen";
             this.image = this.content.Load<Texture2D>(this.path);
+            this.pos.X = 200;
+            this.pos.Y = 300;
 
         }
 
@@ -24,12 +27,11 @@ namespace Teamwork_OOP.Screens
 
         public override void Update(GameTime gameTime)
         {
-            base.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(this.image,Vector2.Zero,Color.AliceBlue);
+            spriteBatch.Draw(this.image, pos, Color.AliceBlue);
         }
     }
 }
