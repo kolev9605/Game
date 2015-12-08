@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Text;
 using Teamwork_OOP.States;
 
 namespace Teamwork_OOP.Engine
@@ -14,11 +15,16 @@ namespace Teamwork_OOP.Engine
         Texture2D map;
         Vector2 mapPos;
 
+        // TODO: extract to character class
+        Texture2D character;
+        Vector2 charPos;
+
         public Engine()
         {
             this.graphics = new GraphicsDeviceManager(this);
             this.Content.RootDirectory = "Content";
             mapPos = new Vector2(0, 0);
+            charPos = new Vector2(0, 0);
         }
 
         protected override void Initialize()
@@ -37,6 +43,7 @@ namespace Teamwork_OOP.Engine
 
             // loading of the map file
             map = this.Content.Load<Texture2D>("map");
+            character = this.Content.Load<Texture2D>("seen");
         }
         
         protected override void UnloadContent()
@@ -49,7 +56,31 @@ namespace Teamwork_OOP.Engine
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            KeyboardState state = Keyboard.GetState();
+            StringBuilder sb = new StringBuilder();
+            foreach (var key in state.GetPressedKeys())
+            {
+                sb.Append("Keys: ").Append(key).Append(" Pressed");
+            }
+
+            if (sb.Length > 0)
+            {
+                System.Diagnostics.Debug.WriteLine(sb.ToString());
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("No keys pressed");
+            }
+
+            if (state.IsKeyDown(Keys.Right))
+                charPos.X += 1;
+            if (state.IsKeyDown(Keys.Down))
+                charPos.Y += 1;
+            if (state.IsKeyDown(Keys.Left))
+                charPos.X -= 1;
+            if (state.IsKeyDown(Keys.Up))
+                charPos.Y -= 1;
+
             //ScreenManager.Instance.Update(gameTime);
             base.Update(gameTime);
         }
@@ -63,6 +94,7 @@ namespace Teamwork_OOP.Engine
             this.spriteBatch.Begin();
             //ScreenManager.Instance.Draw(this.spriteBatch);
             spriteBatch.Draw(map, mapPos);
+            spriteBatch.Draw(character, charPos);
 
             this.spriteBatch.End();
 
