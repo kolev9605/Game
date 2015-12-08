@@ -1,10 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Teamwork_OOP.Screens
 {
-    public class GameScreen
+    public abstract class GameScreen
     {
         protected ContentManager content;
 
@@ -27,6 +28,6 @@ namespace Teamwork_OOP.Screens
         {
             
         }
-
+        
     }
 }
