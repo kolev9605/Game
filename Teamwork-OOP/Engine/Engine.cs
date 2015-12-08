@@ -10,18 +10,23 @@ namespace Teamwork_OOP.Engine
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        // the below two lines should be extracted in the map class
+        Texture2D map;
+        Vector2 mapPos;
+
         public Engine()
         {
             this.graphics = new GraphicsDeviceManager(this);
             this.Content.RootDirectory = "Content";
+            mapPos = new Vector2(0, 0);
         }
 
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            this.graphics.PreferredBackBufferWidth = (int) ScreenManager.Instance.Dimention.X;
-            this.graphics.PreferredBackBufferHeight = (int) ScreenManager.Instance.Dimention.Y;
-            this.graphics.ApplyChanges();
+            //this.graphics.PreferredBackBufferWidth = (int) ScreenManager.Instance.Dimention.X;
+            //this.graphics.PreferredBackBufferHeight = (int) ScreenManager.Instance.Dimention.Y;
+            //this.graphics.ApplyChanges();
             base.Initialize();
         }
 
@@ -30,8 +35,8 @@ namespace Teamwork_OOP.Engine
             // Create a new SpriteBatch, which can be used to draw textures.
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
-            ScreenManager.Instance.LoadContent(this.Content);
+            // loading of the map file
+            map = this.Content.Load<Texture2D>("map");
         }
         
         protected override void UnloadContent()
@@ -45,22 +50,23 @@ namespace Teamwork_OOP.Engine
                 Exit();
 
             // TODO: Add your update logic here
-            ScreenManager.Instance.Update(gameTime);
+            //ScreenManager.Instance.Update(gameTime);
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            this.GraphicsDevice.Clear(Color.CornflowerBlue);
+            //this.GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
 
             this.spriteBatch.Begin();
-            ScreenManager.Instance.Draw(this.spriteBatch);
+            //ScreenManager.Instance.Draw(this.spriteBatch);
+            spriteBatch.Draw(map, mapPos);
 
             this.spriteBatch.End();
 
-            base.Draw(gameTime);
+            //base.Draw(gameTime);
         }
     }
 }
