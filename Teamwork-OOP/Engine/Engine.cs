@@ -53,24 +53,20 @@ namespace Teamwork_OOP.Engine
         
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            KeyboardState state = Keyboard.GetState();
+
+            if (state.IsKeyDown(Keys.Escape))
                 Exit();
 
-            KeyboardState state = Keyboard.GetState();
             StringBuilder sb = new StringBuilder();
+
             foreach (var key in state.GetPressedKeys())
-            {
                 sb.Append("Keys: ").Append(key).Append(" Pressed");
-            }
 
             if (sb.Length > 0)
-            {
                 System.Diagnostics.Debug.WriteLine(sb.ToString());
-            }
             else
-            {
                 System.Diagnostics.Debug.WriteLine("No keys pressed");
-            }
 
             if (state.IsKeyDown(Keys.Right))
                 charPos.X += 1;
