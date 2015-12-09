@@ -5,7 +5,7 @@ namespace Teamwork_OOP.Interfaces
 {
     public interface IDrawable
     {
-        Texture2D Texture { get; }
+        Texture2D Texture { get; set; }
 
         Vector2 Position { get; set; }
     }

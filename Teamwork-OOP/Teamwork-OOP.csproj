@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="Characters\Archer.cs" />
     <Compile Include="Characters\Character.cs" />
+    <Compile Include="Characters\PlayableCharacter.cs" />
     <Compile Include="Characters\Warrior.cs" />
     <Compile Include="Engine\Engine.cs" />
     <Compile Include="GameObject.cs" />

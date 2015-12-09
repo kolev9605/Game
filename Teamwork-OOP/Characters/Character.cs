@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Teamwork_OOP.Interfaces;
 
 namespace Teamwork_OOP.Characters
@@ -10,7 +11,8 @@ namespace Teamwork_OOP.Characters
         private int attackPoints;  //starting attack points
         private int defensePoints; //the amount of damage reduction on every attack
         private uint range;
-        private Vector2 currentPosition; // position on the matrix (x,y)
+        private Vector2 position; // position on the matrix (x,y)
+        private Texture2D texture; 
         private bool isAlive;
         private bool isRanged;
 
@@ -42,10 +44,16 @@ namespace Teamwork_OOP.Characters
             set { defensePoints = value; }
         }
 
-        public Vector2 CurrentPosition
+        public Vector2 Position
         {
-            get { return currentPosition; }
-            set { currentPosition = value; }
+            get { return this.position; }
+            set { this.position = value; }
+        }
+
+        public Texture2D Texture
+        {
+            get { return this.texture; }
+            set { this.texture = value; }
         }
 
         public bool IsAlive

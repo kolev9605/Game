@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Teamwork_OOP.Characters
 {
-    class Warrior : Character
+    class Warrior : PlayableCharacter
     {
     }
 }

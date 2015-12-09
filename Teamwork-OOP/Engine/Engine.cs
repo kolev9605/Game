@@ -4,7 +4,8 @@ using Microsoft.Xna.Framework.Input;
 using System.Text;
 using Teamwork_OOP.States;
 using Teamwork_OOP.Maps;
-using System.Diagnostics;
+using Teamwork_OOP.Characters;
+
 
 namespace Teamwork_OOP.Engine
 {
@@ -13,10 +14,7 @@ namespace Teamwork_OOP.Engine
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Map map;
-
-        // TODO: extract to character class
-        Texture2D character;
-        Vector2 charPos;
+        PlayableCharacter player;
 
         public Engine()
         {
@@ -24,7 +22,7 @@ namespace Teamwork_OOP.Engine
             this.Content.RootDirectory = "Content";
 
             this.map = new Map();
-            this.charPos = new Vector2(0, 0);
+            this.player = new Warrior();
 
             IsMouseVisible = true;
         }
@@ -40,8 +38,8 @@ namespace Teamwork_OOP.Engine
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
 
             // Load map and character textures
-            map.Texture = this.Content.Load<Texture2D>("map");
-            character = this.Content.Load<Texture2D>("seen");
+            this.map.Texture = this.Content.Load<Texture2D>("map");
+            this.player.Texture = this.Content.Load<Texture2D>("seen");
         }
         
         protected override void UnloadContent()
@@ -57,14 +55,14 @@ namespace Teamwork_OOP.Engine
                 Exit();
 
             if (state.IsKeyDown(Keys.Right))
-                charPos.X += 1;
+                this.player.MoveRight();
             if (state.IsKeyDown(Keys.Down))
-                charPos.Y += 1;
+                this.player.MoveDown();
             if (state.IsKeyDown(Keys.Left))
-                charPos.X -= 1;
+                this.player.MoveLeft();
             if (state.IsKeyDown(Keys.Up))
-                charPos.Y -= 1;
-            
+                this.player.MoveUp();
+
             base.Update(gameTime);
         }
 
@@ -72,8 +70,9 @@ namespace Teamwork_OOP.Engine
         {
             this.spriteBatch.Begin();
 
+            // Drawing of the map and character textures
             spriteBatch.Draw(map.Texture, map.Position);
-            spriteBatch.Draw(character, charPos);
+            spriteBatch.Draw(player.Texture, player.Position);
 
             this.spriteBatch.End();
 
