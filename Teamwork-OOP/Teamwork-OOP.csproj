@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Extentions\Extentions.cs" />
     <Compile Include="GameObjects\Camera.cs" />
     <Compile Include="GameObjects\Characters\Character.cs" />
     <Compile Include="Engine\Engine.cs" />
@@ -45,6 +46,7 @@
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\Map\Map.cs" />
     <Compile Include="GameObjects\Map\Tiles\Tile.cs" />
+    <Compile Include="Handlers\CollisionHandler.cs" />
     <Compile Include="Handlers\InputHandler.cs" />
     <Compile Include="Handlers\TextureHandler.cs" />
     <Compile Include="States\State.cs" />

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Teamwork_OOP.Extentions;
 using Teamwork_OOP.GameObjects;
 using Teamwork_OOP.GameObjects.Characters;
 using Teamwork_OOP.GameObjects.Map;
@@ -72,14 +73,7 @@ namespace Teamwork_OOP.Engine
             KeyboardState state = Keyboard.GetState();
 
 
-            if (state.IsKeyDown(Keys.Right))
-                this.player.IncrementX(this.player.StepSize);
-            if (state.IsKeyDown(Keys.Down))
-                this.player.IncrementY(this.player.StepSize);
-            if (state.IsKeyDown(Keys.Left))
-                this.player.IncrementX(-this.player.StepSize);
-            if (state.IsKeyDown(Keys.Up))
-                this.player.IncrementY(-this.player.StepSize);
+            this.player.Move(state);
 
             base.Update(gameTime);
         }

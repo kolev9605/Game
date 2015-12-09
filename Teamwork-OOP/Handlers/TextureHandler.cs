@@ -11,6 +11,7 @@ namespace Teamwork_OOP.InputHandler
         public static void Load(ContentManager content)
         {
             textureLibrary.Add("grass_tile", content.Load<Texture2D>("grass_tile"));
+            textureLibrary.Add("rock_tile", content.Load<Texture2D>("rock_tile"));
         }
 
         public static Texture2D GetTexture(string id)
