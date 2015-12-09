@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Text;
 using Teamwork_OOP.States;
+using System.Diagnostics;
 
 namespace Teamwork_OOP.Engine
 {
@@ -25,6 +26,7 @@ namespace Teamwork_OOP.Engine
             this.Content.RootDirectory = "Content";
             mapPos = new Vector2(0, 0);
             charPos = new Vector2(0, 0);
+            IsMouseVisible = true;
         }
 
         protected override void Initialize()
