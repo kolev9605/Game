@@ -1,81 +1,90 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Text;
+using Teamwork_OOP.GameObjects;
+using Teamwork_OOP.GameObjects.Characters;
 using Teamwork_OOP.States;
-using Teamwork_OOP.Maps;
-using Teamwork_OOP.Characters;
-
 
 namespace Teamwork_OOP.Engine
 {
     public class Engine : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        Map map;
-        PlayableCharacter player;
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
+
+
+        //extract the texture loading
+        private Character player;
+        private Camera camera;
 
         public Engine()
         {
             this.graphics = new GraphicsDeviceManager(this);
             this.Content.RootDirectory = "Content";
-
-            this.map = new Map();
-            this.player = new Warrior();
-
-            IsMouseVisible = true;
         }
 
         protected override void Initialize()
         {
+            // TODO: Add your initialization logic here
+            //this.graphics.PreferredBackBufferWidth = (int) ScreenManager.Instance.Dimention.X;
+            //this.graphics.PreferredBackBufferHeight = (int) ScreenManager.Instance.Dimention.Y;
+            //this.graphics.ApplyChanges();
+
+
+            this.player = new Player(this.Content.Load<Texture2D>("seen"), Vector2.Zero);
+            this.camera = new Camera(this.Content.Load<Texture2D>("map"), Vector2.Zero);
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
+            this.IsMouseVisible = true;
             // Create a new SpriteBatch, which can be used to draw textures.
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
-
-            // Load map and character textures
-            this.map.Texture = this.Content.Load<Texture2D>("map");
-            this.player.Texture = this.Content.Load<Texture2D>("seen");
         }
-        
+
         protected override void UnloadContent()
         {
-            ScreenManager.Instance.UnloadContent();
+            //ScreenManager.Instance.UnloadContent();
         }
-        
+
         protected override void Update(GameTime gameTime)
         {
-            KeyboardState state = Keyboard.GetState();
-
-            if (state.IsKeyDown(Keys.Escape))
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            KeyboardState state = Keyboard.GetState();
+
             if (state.IsKeyDown(Keys.Right))
-                this.player.MoveRight();
+                this.player.CharacterPosition = new Vector2(this.player.CharacterPosition.X + 1,
+                                                            this.player.CharacterPosition.Y);
             if (state.IsKeyDown(Keys.Down))
-                this.player.MoveDown();
+                this.player.CharacterPosition = new Vector2(this.player.CharacterPosition.X,
+                                                            this.player.CharacterPosition.Y + 1);
             if (state.IsKeyDown(Keys.Left))
-                this.player.MoveLeft();
+                this.player.CharacterPosition = new Vector2(this.player.CharacterPosition.X - 1,
+                                                            this.player.CharacterPosition.Y);
             if (state.IsKeyDown(Keys.Up))
-                this.player.MoveUp();
+                this.player.CharacterPosition = new Vector2(this.player.CharacterPosition.X,
+                                                            this.player.CharacterPosition.Y - 1);
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
+            this.GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            // TODO: Add your drawing code here
+
             this.spriteBatch.Begin();
+            //begin draw
 
-            // Drawing of the map and character textures
-            spriteBatch.Draw(map.Texture, map.Position);
-            spriteBatch.Draw(player.Texture, player.Position);
+            this.spriteBatch.Draw(this.camera.CameraTexture, this.camera.CameraPossition);
+            this.spriteBatch.Draw(this.player.CharacterTexture, this.player.CharacterPosition);
 
+            //end draw
             this.spriteBatch.End();
-
             base.Draw(gameTime);
         }
     }

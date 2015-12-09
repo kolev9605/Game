@@ -1,4 +1,4 @@
-﻿namespace Teamwork_OOP
+﻿namespace Teamwork_OOP.GameObjects
 {
     public abstract class GameObject
     {
