@@ -55,6 +55,7 @@ namespace Teamwork_OOP.Engine
 
             KeyboardState state = Keyboard.GetState();
 
+
             if (state.IsKeyDown(Keys.Right))
                 this.player.IncrementX(this.player.StepSize);
             if (state.IsKeyDown(Keys.Down))
