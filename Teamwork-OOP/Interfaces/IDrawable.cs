@@ -1,15 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Teamwork_OOP.Interfaces
 {
     public interface IDrawable
     {
-        void LoadContent();
+        Texture2D Texture { get; }
 
-        void UnloadContent();
-
-        void Update(GameTime gameTime);
-
-        void Draw(GameTime gameTime);
+        Vector2 Position { get; set; }
     }
 }

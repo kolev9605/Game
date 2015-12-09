@@ -1,36 +1,44 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using IDrawable = Teamwork_OOP.Interfaces.IDrawable;
+using Teamwork_OOP.Interfaces;
+using Microsoft.Xna.Framework;
 
 namespace Teamwork_OOP.Maps
 {
-    public class Map : IDrawable
+    public class Map : Interfaces.IDrawable
     {
-        Texture2D map;
-        Vector2 mapPos;
+        Texture2D texture;
+        Vector2 position;
 
-
-        public void LoadContent()
+        public Map()
         {
-            throw new NotImplementedException();
+            this.Position = new Vector2(0, 0);
         }
 
-        public void UnloadContent()
+        public Vector2 Position
         {
-            throw new NotImplementedException();
+            get
+            {
+                return this.position;
+            }
+
+            set
+            {
+                this.position = value;
+            }
         }
 
-        public void Update(GameTime gameTime)
+        public Texture2D Texture
         {
-            throw new NotImplementedException();
-        }
+            get
+            {
+                return this.texture;
+            }
 
-        public void Draw(GameTime gameTime)
-        {
-            throw new NotImplementedException();
+            set
+            {
+                this.texture = value;
+            }
         }
     }
 }

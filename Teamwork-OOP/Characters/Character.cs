@@ -9,9 +9,9 @@ namespace Teamwork_OOP.Characters
         private int healthPoints; //starting health points
         private int attackPoints;  //starting attack points
         private int defensePoints; //the amount of damage reduction on every attack
+        private uint range;
         private Vector2 currentPosition; // position on the matrix (x,y)
         private bool isAlive;
-        private uint range;
         private bool isRanged;
 
         public uint Id

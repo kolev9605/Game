@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Text;
 using Teamwork_OOP.States;
+using Teamwork_OOP.Maps;
 using System.Diagnostics;
 
 namespace Teamwork_OOP.Engine
@@ -11,10 +12,7 @@ namespace Teamwork_OOP.Engine
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
-        // the below two lines should be extracted in the map class
-        Texture2D map;
-        Vector2 mapPos;
+        Map map;
 
         // TODO: extract to character class
         Texture2D character;
@@ -24,17 +22,15 @@ namespace Teamwork_OOP.Engine
         {
             this.graphics = new GraphicsDeviceManager(this);
             this.Content.RootDirectory = "Content";
-            mapPos = new Vector2(0, 0);
-            charPos = new Vector2(0, 0);
+
+            this.map = new Map();
+            this.charPos = new Vector2(0, 0);
+
             IsMouseVisible = true;
         }
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-            //this.graphics.PreferredBackBufferWidth = (int) ScreenManager.Instance.Dimention.X;
-            //this.graphics.PreferredBackBufferHeight = (int) ScreenManager.Instance.Dimention.Y;
-            //this.graphics.ApplyChanges();
             base.Initialize();
         }
 
@@ -43,8 +39,8 @@ namespace Teamwork_OOP.Engine
             // Create a new SpriteBatch, which can be used to draw textures.
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
 
-            // loading of the map file
-            map = this.Content.Load<Texture2D>("map");
+            // Load map and character textures
+            map.Texture = this.Content.Load<Texture2D>("map");
             character = this.Content.Load<Texture2D>("seen");
         }
         
@@ -60,16 +56,6 @@ namespace Teamwork_OOP.Engine
             if (state.IsKeyDown(Keys.Escape))
                 Exit();
 
-            StringBuilder sb = new StringBuilder();
-
-            foreach (var key in state.GetPressedKeys())
-                sb.Append("Keys: ").Append(key).Append(" Pressed");
-
-            if (sb.Length > 0)
-                System.Diagnostics.Debug.WriteLine(sb.ToString());
-            else
-                System.Diagnostics.Debug.WriteLine("No keys pressed");
-
             if (state.IsKeyDown(Keys.Right))
                 charPos.X += 1;
             if (state.IsKeyDown(Keys.Down))
@@ -78,25 +64,20 @@ namespace Teamwork_OOP.Engine
                 charPos.X -= 1;
             if (state.IsKeyDown(Keys.Up))
                 charPos.Y -= 1;
-
-            //ScreenManager.Instance.Update(gameTime);
+            
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            //this.GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            // TODO: Add your drawing code here
-
             this.spriteBatch.Begin();
-            //ScreenManager.Instance.Draw(this.spriteBatch);
-            spriteBatch.Draw(map, mapPos);
+
+            spriteBatch.Draw(map.Texture, map.Position);
             spriteBatch.Draw(character, charPos);
 
             this.spriteBatch.End();
 
-            //base.Draw(gameTime);
+            base.Draw(gameTime);
         }
     }
 }
