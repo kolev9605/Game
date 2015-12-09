@@ -16,6 +16,7 @@ namespace Teamwork_OOP.GameObjects.Characters
         private Vector2 characterPosition; // position on the matrix (x,y)
         private Texture2D characterTexture;
 
+
         //constructor to set the initial possition and texture
         protected Character(Texture2D texture, Vector2 possition)
         {
@@ -68,6 +69,15 @@ namespace Teamwork_OOP.GameObjects.Characters
         {
             get { return this.characterPosition; }
             set { this.characterPosition = value; }
+        }
+
+        public void IncrementX(int value)
+        {
+            this.characterPosition.X += value;
+        }
+        public void IncrementY(int value)
+        {
+            this.characterPosition.Y += value;
         }
         //extracted character texture property
         public Texture2D CharacterTexture

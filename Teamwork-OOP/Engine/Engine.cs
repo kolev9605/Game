@@ -14,7 +14,7 @@ namespace Teamwork_OOP.Engine
 
 
         //extract the texture loading
-        private Character player;
+        private Player player;
         private Camera camera;
 
         public Engine()
@@ -56,17 +56,13 @@ namespace Teamwork_OOP.Engine
             KeyboardState state = Keyboard.GetState();
 
             if (state.IsKeyDown(Keys.Right))
-                this.player.CharacterPosition = new Vector2(this.player.CharacterPosition.X + 1,
-                                                            this.player.CharacterPosition.Y);
+                this.player.IncrementX(this.player.StepSize);
             if (state.IsKeyDown(Keys.Down))
-                this.player.CharacterPosition = new Vector2(this.player.CharacterPosition.X,
-                                                            this.player.CharacterPosition.Y + 1);
+                this.player.IncrementY(this.player.StepSize);
             if (state.IsKeyDown(Keys.Left))
-                this.player.CharacterPosition = new Vector2(this.player.CharacterPosition.X - 1,
-                                                            this.player.CharacterPosition.Y);
+                this.player.IncrementX(-this.player.StepSize);
             if (state.IsKeyDown(Keys.Up))
-                this.player.CharacterPosition = new Vector2(this.player.CharacterPosition.X,
-                                                            this.player.CharacterPosition.Y - 1);
+                this.player.IncrementY(-this.player.StepSize);
 
             base.Update(gameTime);
         }
