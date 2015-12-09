@@ -3,12 +3,17 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Teamwork_OOP.GameObjects;
 using Teamwork_OOP.GameObjects.Characters;
+using Teamwork_OOP.GameObjects.Map;
+using Teamwork_OOP.InputHandler;
 using Teamwork_OOP.States;
 
 namespace Teamwork_OOP.Engine
 {
     public class Engine : Game
     {
+
+        //TODO make Possition of player a structure
+
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
 
@@ -16,6 +21,8 @@ namespace Teamwork_OOP.Engine
         //extract the texture loading
         private Player player;
         private Camera camera;
+
+        private Map map;
 
         public Engine()
         {
@@ -32,7 +39,14 @@ namespace Teamwork_OOP.Engine
 
 
             this.player = new Player(this.Content.Load<Texture2D>("seen"), Vector2.Zero);
-            this.camera = new Camera(this.Content.Load<Texture2D>("map"), Vector2.Zero);
+            //this.camera = new Camera(this.Content.Load<Texture2D>("map"), Vector2.Zero);
+
+
+            this.map = new Map();
+            this.map.Initialize();
+
+            
+            
             base.Initialize();
         }
 
@@ -41,6 +55,8 @@ namespace Teamwork_OOP.Engine
             this.IsMouseVisible = true;
             // Create a new SpriteBatch, which can be used to draw textures.
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
+
+            TextureHandler.Load(Content);
         }
 
         protected override void UnloadContent()
@@ -77,8 +93,12 @@ namespace Teamwork_OOP.Engine
             this.spriteBatch.Begin();
             //begin draw
 
-            this.spriteBatch.Draw(this.camera.CameraTexture, this.camera.CameraPossition);
+            //this.spriteBatch.Draw(this.camera.CameraTexture, this.camera.CameraPossition);
+            this.map.Tiles.ForEach(tile => this.spriteBatch.Draw(TextureHandler.GetTexture(tile.Type), tile.Position));
             this.spriteBatch.Draw(this.player.CharacterTexture, this.player.CharacterPosition);
+
+            
+
 
             //end draw
             this.spriteBatch.End();
