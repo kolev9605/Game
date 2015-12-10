@@ -15,13 +15,14 @@ namespace Teamwork_OOP.GameObjects.Characters
         private double timeToUpdate;
         private string currentAnimation;
         private bool isMoving;
+        private int stepSize;
 
         public int FramesPerSecond
         {
             set
             {
                 //calculating the time for updating ..
-                this.timeToUpdate = (1f / value); 
+                this.timeToUpdate = (1f / value);
             }
         }
 
@@ -46,8 +47,6 @@ namespace Teamwork_OOP.GameObjects.Characters
             PlayAnimation("idleDown"); 
         }
 
-        public int StepSize { get; private set; }
-
         public void LoadContent(ContentManager content)
         {
             //loading the sprite sheet
@@ -64,6 +63,23 @@ namespace Teamwork_OOP.GameObjects.Characters
             AddAnimation(3, 0, 12, "idleRight", 113, 112, new Vector2(0, 0));
             AddAnimation(3, 113 * 2, 12, "idleLeft", 113, 112, new Vector2(0, 0));
         }
+
+        protected Player(
+            Texture2D texture,
+            Vector2 possition,
+            int healthPoints,
+            int attackPoints,
+            int defencePoints,
+            int range)
+            : base (texture, possition, healthPoints, attackPoints, defencePoints, range)
+        {
+        }
+
+        public int StepSize
+        {
+            get { return this.stepSize; }
+            private set { this.stepSize = value; }
+        }  
 
         public void Move(KeyboardState state, Map.Map map)
         {

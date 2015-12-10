@@ -6,7 +6,6 @@ using Teamwork_OOP.GameObjects;
 using Teamwork_OOP.GameObjects.Characters;
 using Teamwork_OOP.GameObjects.Map;
 using Teamwork_OOP.InputHandler;
-using Teamwork_OOP.States;
 
 namespace Teamwork_OOP.Engine
 {

@@ -42,6 +42,9 @@
     <Compile Include="GameObjects\Camera.cs" />
     <Compile Include="GameObjects\Characters\Character.cs" />
     <Compile Include="Engine\Engine.cs" />
+    <Compile Include="GameObjects\Characters\EnemyClasses\Mob.cs" />
+    <Compile Include="GameObjects\Characters\PlayerClasses\Warrior.cs" />
+    <Compile Include="GameObjects\Characters\Enemy.cs" />
     <Compile Include="GameObjects\Characters\Player.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\Map\Map.cs" />
@@ -73,6 +76,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Graphics\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
