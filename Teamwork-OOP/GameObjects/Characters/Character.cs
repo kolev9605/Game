@@ -19,9 +19,8 @@ namespace Teamwork_OOP.GameObjects.Characters
         //TODO add character StepSize ( how many pixels this travels on each step )
 
         //constructor to set the initial possition and texture
-        protected Character(Texture2D texture, Vector2 possition)
+        protected Character(Vector2 possition)
         {
-            this.CharacterTexture = texture;
             this.Position = possition;
         }
         
@@ -68,11 +67,6 @@ namespace Teamwork_OOP.GameObjects.Characters
         //extracted character possition property
         
         //extracted character texture property
-        public Texture2D CharacterTexture
-        {
-            get { return this.characterTexture; }
-            set { this.characterTexture = value; }
-        }
 
         public Vector2 Position
         {

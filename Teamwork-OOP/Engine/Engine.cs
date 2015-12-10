@@ -39,8 +39,7 @@ namespace Teamwork_OOP.Engine
             //this.graphics.ApplyChanges();
 
 
-            this.player = new Player(this.Content.Load<Texture2D>("seen"), Vector2.Zero);
-            //this.camera = new Camera(this.Content.Load<Texture2D>("map"), Vector2.Zero);
+            this.player = new Player(Vector2.Zero);
 
 
             this.map = new Map();
@@ -56,13 +55,13 @@ namespace Teamwork_OOP.Engine
             this.IsMouseVisible = true;
             // Create a new SpriteBatch, which can be used to draw textures.
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
+            this.player.LoadContent(this.Content);
 
-            TextureHandler.Load(Content);
+            TextureHandler.Load(this.Content);
         }
 
         protected override void UnloadContent()
         {
-            //ScreenManager.Instance.UnloadContent();
         }
 
         protected override void Update(GameTime gameTime)
@@ -71,10 +70,8 @@ namespace Teamwork_OOP.Engine
                 Exit();
 
             KeyboardState state = Keyboard.GetState();
-
-
             this.player.Move(state,this.map);
-
+            this.player.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -90,7 +87,7 @@ namespace Teamwork_OOP.Engine
 
             //this.spriteBatch.Draw(this.camera.CameraTexture, this.camera.CameraPossition);
             this.map.Tiles.ForEach(tile => this.spriteBatch.Draw(TextureHandler.GetTexture(tile.Type), tile.Position));
-            this.spriteBatch.Draw(this.player.CharacterTexture, this.player.Position);
+            this.player.Draw(this.spriteBatch);
 
             //end draw
             this.spriteBatch.End();
