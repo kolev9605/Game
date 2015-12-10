@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using System.IO;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Teamwork_OOP.Interfaces;
 
@@ -6,78 +8,138 @@ namespace Teamwork_OOP.GameObjects.Characters
 {
     public abstract class Character : GameObject, IAttack, IMovable
     {
-        private readonly uint id; //unique id for every character type 
-        private int healthPoints; //starting health points
-        private int attackPoints;  //starting attack points
-        private int defensePoints; //the amount of damage reduction on every attack
-        private bool isAlive;
-        private uint range;
-        private bool isRanged;
-        private Vector2 position; // position on the matrix (x,y)
-        //TODO Figure a way to remove this field and have the .x and .y setters work ( see increment method)
-        private Texture2D characterTexture;
-        //TODO add character StepSize ( how many pixels this travels on each step )
+        private readonly uint id;
 
-        //constructor to set the initial possition and texture
+        // Stats
+        private int healthPoints;
+        private int attackPoints; 
+        private int defencePoints;
+        private int range;
+
+        private bool isAlive;
+
+        private Vector2 position;
+        //TODO: Figure a way to remove this field and have the .x and .y setters work ( see increment method)
+
+        private Texture2D characterTexture;
+        //TODO: Add character StepSize ( how many pixels this travels on each step )
+
+        // Constructor to set the initial possition and texture
         protected Character(Texture2D texture, Vector2 possition)
         {
             this.CharacterTexture = texture;
             this.Position = possition;
         }
-        
-        //TODO: VALIDATION
+
+        protected Character(
+            Texture2D texture, 
+            Vector2 possition, 
+            int healthPoints, 
+            int attackPoints, 
+            int defencePoints,
+            int range)
+        {
+            this.CharacterTexture = texture;
+            this.Position = possition;
+            this.HealthPoints = healthPoints;
+            this.AttackPoints = attackPoints;
+            this.DefencePoints = defencePoints;
+            this.Range = range;
+        }
+
+        //TODO: More validation
         public uint Id
         {
             get { return this.id; }
         }
+
         public int HealthPoints
         {
             get { return this.healthPoints; }
-            set { this.healthPoints = value; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                this.healthPoints = value;
+            }
         }
+
         public int AttackPoints
         {
             get { return this.attackPoints; }
-            set { this.attackPoints = value; }
+            set
+            {
+                if (value > 0)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                this.attackPoints = value;
+            }
         }
+
         public void Attack(IAttackable target)
         {
             throw new System.NotImplementedException();
         }
-        public int DefensePoints
+
+        public int DefencePoints
         {
-            get { return this.defensePoints; }
-            set { this.defensePoints = value; }
+            get { return this.defencePoints; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                this.defencePoints = value;
+            }
         }
+
         public bool IsAlive
         {
             get { return this.isAlive; }
             set { this.isAlive = value; }
         }
-        public uint Range
+
+        public int Range
         {
             get { return this.range; }
-            set { this.range = value; }
-        }
-        public bool IsRanged
-        {
-            get { return this.isRanged; }
-            set { this.isRanged = value; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                this.range = value;
+            }
         }
 
-        //extracted character possition property
-        
-        //extracted character texture property
         public Texture2D CharacterTexture
         {
             get { return this.characterTexture; }
-            set { this.characterTexture = value; }
+            set
+            {
+                if (value == null)
+                {
+                    throw new FileNotFoundException();
+                }
+                this.characterTexture = value;
+            }
         }
 
         public Vector2 Position
         {
             get { return this.position; }
-            set { this.position = value; }
+            set
+            {
+                if (value.X < 0 || value.Y < 0)
+                {
+                    throw new ArgumentOutOfRangeException("value", "Coordinates cannot be negative.");
+                }
+                this.position = value;
+            }
         }
 
         public void IncrementX(int value)

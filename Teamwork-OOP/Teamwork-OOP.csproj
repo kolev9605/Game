@@ -42,6 +42,7 @@
     <Compile Include="GameObjects\Camera.cs" />
     <Compile Include="GameObjects\Characters\Character.cs" />
     <Compile Include="Engine\Engine.cs" />
+    <Compile Include="GameObjects\Characters\Enemy.cs" />
     <Compile Include="GameObjects\Characters\Player.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\Map\Map.cs" />

@@ -1,21 +1,36 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Teamwork_OOP.InputHandler;
-using Teamwork_OOP.GameObjects.Map;
 
 namespace Teamwork_OOP.GameObjects.Characters
 {
     class Player : Character
     {
-        
-        public int stepSize;
-        public int StepSize { get; private set; }   
+        private int stepSize;
+
+         
         public Player(Texture2D texture, Vector2 possition) 
             : base(texture, possition)
         {
             this.StepSize = 2;
         }
+
+        protected Player(
+            Texture2D texture,
+            Vector2 possition,
+            int healthPoints,
+            int attackPoints,
+            int defencePoints,
+            int range)
+            : base (texture, possition, healthPoints, attackPoints, defencePoints, range)
+        {
+        }
+
+        public int StepSize
+        {
+            get { return this.stepSize; }
+            private set { this.stepSize = value; }
+        }  
 
         public void Move(KeyboardState state, Map.Map map)
         {
@@ -67,6 +82,5 @@ namespace Teamwork_OOP.GameObjects.Characters
             }
 
         }
-        
     }
 }
