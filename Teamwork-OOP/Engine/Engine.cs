@@ -73,13 +73,14 @@ namespace Teamwork_OOP.Engine
             KeyboardState state = Keyboard.GetState();
 
 
-            this.player.Move(state);
+            this.player.Move(state,this.map);
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
+            //TODO UNCOMMENT THESE
             this.GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
@@ -89,9 +90,9 @@ namespace Teamwork_OOP.Engine
 
             //this.spriteBatch.Draw(this.camera.CameraTexture, this.camera.CameraPossition);
             this.map.Tiles.ForEach(tile => this.spriteBatch.Draw(TextureHandler.GetTexture(tile.Type), tile.Position));
-            this.spriteBatch.Draw(this.player.CharacterTexture, this.player.CharacterPosition);
+            this.spriteBatch.Draw(this.player.CharacterTexture, this.player.Position);
 
-            
+
 
 
             //end draw

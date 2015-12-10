@@ -17,8 +17,6 @@ namespace Teamwork_OOP.GameObjects.Map
         {
         }
         
-
-        
         //TODO become ReadLevel which initializes level from file
         public void Initialize()
         {
@@ -40,40 +38,30 @@ namespace Teamwork_OOP.GameObjects.Map
                 {
                     for (int i = 0; i < getLine.Length; i++)  
                     {
+                        //TODO add cases to this switch for new tiles
                         switch (getLine[i])
                         {
                             case 'G':
-                                this.Tiles[currentLine, i] = new Tile("grass_tile", new Vector2(currentLine * 50, i * 50));
+                                this.Tiles[currentLine, i] = new Tile("grass_tile", true, new Vector2(i * 50, currentLine * 50));
                                 continue;
                             case 'R':
-                                this.Tiles[currentLine, i] = new Tile("rock_tile", new Vector2(currentLine * 50, i * 50));
+                                this.Tiles[currentLine, i] = new Tile("rock_tile", false , new Vector2(i * 50, currentLine * 50));
                                 continue;
                         }
+                        //TODO true and false in TILE constructor should be gone => tile should set those based on type
 
                     }
+
                     getLine = reader.ReadLine();
                     currentLine++;
                 }
             }
-            //for (int i = 0; i < 20; i++)
-            //{
-            //    bool isRock = false;
-            //    for (int k = 0; k < 2; k++)
-            //    {
-            //        if (isRock)
-            //        {
-            //            this.Tiles.Add(new Tile("rock_tile", new Vector2(i*50, k*50)));
-            //            isRock = false;
-            //        }
-            //        else
-            //        {
-            //            this.Tiles.Add(new Tile("grass_tile", new Vector2(i * 50, k * 50)));
-            //            isRock = true;
-            //        }
-            //    }
-            //}
         }
-        
-         
+
+
+        public bool CanStepOn(int TileRow, int TileCol)
+        {
+            return this.Tiles[TileRow, TileCol].IsSteppable;
+        }
     }
 }

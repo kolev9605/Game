@@ -49,6 +49,7 @@
     <Compile Include="Handlers\CollisionHandler.cs" />
     <Compile Include="Handlers\InputHandler.cs" />
     <Compile Include="Handlers\TextureHandler.cs" />
+    <Compile Include="Interfaces\IMovable.cs" />
     <Compile Include="States\State.cs" />
     <Compile Include="Interfaces\IAttack.cs" />
     <Compile Include="Interfaces\IAttackable.cs" />

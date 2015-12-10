@@ -10,9 +10,9 @@ namespace Teamwork_OOP.GameObjects.Map.Tiles
         private string type;
         private Vector2 position;
 
-        public Tile(string type, Vector2 position)
+        public Tile(string type,bool isSteppable, Vector2 position)
         {
-            IsSteppable = true;
+            IsSteppable = isSteppable;
             this.Type = type;
             this.Position = position;
             //TODO position could be derived from tile positon in array 

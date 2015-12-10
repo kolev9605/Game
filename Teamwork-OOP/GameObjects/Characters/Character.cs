@@ -4,7 +4,7 @@ using Teamwork_OOP.Interfaces;
 
 namespace Teamwork_OOP.GameObjects.Characters
 {
-    public abstract class Character : GameObject, IAttack
+    public abstract class Character : GameObject, IAttack, IMovable
     {
         private readonly uint id; //unique id for every character type 
         private int healthPoints; //starting health points
@@ -13,15 +13,16 @@ namespace Teamwork_OOP.GameObjects.Characters
         private bool isAlive;
         private uint range;
         private bool isRanged;
-        private Vector2 characterPosition; // position on the matrix (x,y)
+        private Vector2 position; // position on the matrix (x,y)
+        //TODO Figure a way to remove this field and have the .x and .y setters work ( see increment method)
         private Texture2D characterTexture;
-
+        //TODO add character StepSize ( how many pixels this travels on each step )
 
         //constructor to set the initial possition and texture
         protected Character(Texture2D texture, Vector2 possition)
         {
             this.CharacterTexture = texture;
-            this.CharacterPosition = possition;
+            this.Position = possition;
         }
         
         //TODO: VALIDATION
@@ -65,25 +66,37 @@ namespace Teamwork_OOP.GameObjects.Characters
         }
 
         //extracted character possition property
-        public Vector2 CharacterPosition
-        {
-            get { return this.characterPosition; }
-            set { this.characterPosition = value; }
-        }
-
-        public void IncrementX(int value)
-        {
-            this.characterPosition.X += value;
-        }
-        public void IncrementY(int value)
-        {
-            this.characterPosition.Y += value;
-        }
+        
         //extracted character texture property
         public Texture2D CharacterTexture
         {
             get { return this.characterTexture; }
             set { this.characterTexture = value; }
         }
+
+        public Vector2 Position
+        {
+            get { return this.position; }
+            set { this.position = value; }
+        }
+
+        public void IncrementX(int value)
+        {
+            this.position.X += value;
+        }
+
+        public void IncrementY(int value)
+        {
+            this.position.Y += value;
+        }
+
+        //TODO KPK FOR ALL CLASSES (CHECK DECLARATION ORDER, SHOULD BE =>
+        //constants
+        //fields
+        //constructors
+        //properties
+        //methods
+        //TODO order for all of the above =>
+        //public / protected / internal / private /
     }
 }
