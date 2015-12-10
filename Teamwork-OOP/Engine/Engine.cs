@@ -92,9 +92,6 @@ namespace Teamwork_OOP.Engine
             this.map.Tiles.ForEach(tile => this.spriteBatch.Draw(TextureHandler.GetTexture(tile.Type), tile.Position));
             this.spriteBatch.Draw(this.player.CharacterTexture, this.player.Position);
 
-
-
-
             //end draw
             this.spriteBatch.End();
             base.Draw(gameTime);
