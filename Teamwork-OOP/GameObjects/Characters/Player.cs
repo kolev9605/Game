@@ -26,17 +26,22 @@ namespace Teamwork_OOP.GameObjects.Characters
             //    this.IncrementX(this.StepSize);
             //}
             //else this.IncrementX(-this.StepSize);
+
             if (state.IsKeyDown(Keys.Right))
             {
-                if (CollisionHandler.IsTileSteppable(new Vector2(this.Position.X + this.stepSize, this.Position.Y), map))
+                int tempCol = (int)(this.Position.X + this.StepSize) / 50;
+                int tempRol = (int)(this.Position.Y) / 50;
+                if (map.CanStepOn(tempRol, tempCol))
                     this.IncrementX(this.StepSize);
                 //else this.IncrementX(-this.StepSize*2);
             }
-                
+
             //
             if (state.IsKeyDown(Keys.Down))
             {
-                if(CollisionHandler.IsTileSteppable(new Vector2(this.Position.X, this.Position.Y + this.stepSize), map))
+                int tempCol = (int)this.Position.X/50;
+                int tempRol = (int)(this.Position.Y+this.StepSize)/50;
+                if (map.CanStepOn(tempRol,tempCol))
                     this.IncrementY(this.StepSize);
                 //else this.IncrementY(-this.StepSize*2);
             }
@@ -45,18 +50,22 @@ namespace Teamwork_OOP.GameObjects.Characters
             //
             if (state.IsKeyDown(Keys.Left))
             {
-                if (CollisionHandler.IsTileSteppable(new Vector2(this.Position.X - this.stepSize, this.Position.Y), map))
+                int tempCol = (int)(this.Position.X - this.StepSize) / 50;
+                int tempRol = (int)(this.Position.Y) / 50;
+                if (map.CanStepOn(tempRol, tempCol))
                     this.IncrementX(-this.StepSize);
                 //else this.IncrementX(this.StepSize*2);
             }
 
             if (state.IsKeyDown(Keys.Up))
             {
-                if (CollisionHandler.IsTileSteppable(new Vector2(this.Position.X, this.Position.Y - this.stepSize), map))
+                int tempCol = (int)this.Position.X / 50;
+                int tempRol = (int)(this.Position.Y - this.StepSize) / 50;
+                if (map.CanStepOn(tempRol, tempCol))
                     this.IncrementY(-this.StepSize);
                 //else this.IncrementY(this.StepSize*2);
             }
-                
+
         }
         
     }
