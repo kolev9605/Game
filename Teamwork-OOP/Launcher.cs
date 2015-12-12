@@ -7,6 +7,7 @@ namespace Teamwork_OOP
         [STAThread]
         static void Main()
         {
+            //TODO GO THROUGH ALL TODOS AT END OF DEVELOPMENT
             using (var game = new Engine.Engine())
                 game.Run();
         }

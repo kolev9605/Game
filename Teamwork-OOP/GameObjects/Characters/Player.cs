@@ -3,11 +3,18 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Teamwork_OOP.InputHandler;
+using Teamwork_OOP.GameObjects.Map;
+using Teamwork_OOP.Interfaces;
 
 namespace Teamwork_OOP.GameObjects.Characters
 {
     class Player : Character
     {
+        private const int textureWidth = 113;
+        private const int textureHeight = 112;
+        //TODO THESE -------^ SHOULD BE TAKEN AUTOMATICALLY FROM TEXTURE OR WHATEVER
+        private const int default_stepSize = 4;
         private int frameIndex;
         private Texture2D playerSprite;
         private Dictionary<string, Rectangle[]> animations; // dictionary for storing all animations
@@ -15,7 +22,34 @@ namespace Teamwork_OOP.GameObjects.Characters
         private double timeToUpdate;
         private string currentAnimation;
         private bool isMoving;
-        private int stepSize;
+
+        public Player(Vector2 possition)
+            : base(possition,default_stepSize,textureHeight,textureWidth)
+        {
+            //setting the animation FPS to 12
+            this.FramesPerSecond = 12;
+            //setting the player moving speed 
+            this.isMoving = false;
+            //initialize the animations dictionary
+            this.animations = new Dictionary<string, Rectangle[]>();
+
+            //playing initial animation
+            PlayAnimation("idleDown");
+            
+
+        }
+
+        protected Player(
+            Texture2D texture,
+            Vector2 possition,
+            int healthPoints,
+            int attackPoints,
+            int defencePoints,
+            int range)
+            : base(texture, possition, healthPoints, attackPoints, defencePoints, range)
+        {
+
+        }
 
         public int FramesPerSecond
         {
@@ -31,28 +65,15 @@ namespace Teamwork_OOP.GameObjects.Characters
             get { return this.playerSprite; }
             set { this.playerSprite = value; }
         }
-
-        public Player(Vector2 possition)
-            : base(possition)
-        {
-            //setting the animation FPS to 12
-            this.FramesPerSecond = 12;
-            //setting the player moving speed 
-            this.StepSize = 5; 
-            this.isMoving = false;
-            //initialize the animations dictionary
-            this.animations = new Dictionary<string, Rectangle[]>();
-
-            //playing initial animation
-            PlayAnimation("idleDown"); 
-        }
-
+        
         public void LoadContent(ContentManager content)
         {
             //loading the sprite sheet
             this.playerSprite = content.Load<Texture2D>("player_sprite_V2");
 
             //adding all animation to the dictionary
+
+            
             AddAnimation(10, 113, 0, "runDown", 113, 112, new Vector2(0, 0));
             AddAnimation(10, 113 * 2, 0, "runUp", 113, 112, new Vector2(0, 0));
             AddAnimation(10, 113 * 3, 0, "runRight", 113, 112, new Vector2(0, 0));
@@ -62,86 +83,41 @@ namespace Teamwork_OOP.GameObjects.Characters
             AddAnimation(3, 0, 8, "idleUp", 113, 112, new Vector2(0, 0));
             AddAnimation(3, 0, 12, "idleRight", 113, 112, new Vector2(0, 0));
             AddAnimation(3, 113 * 2, 12, "idleLeft", 113, 112, new Vector2(0, 0));
-        }
+            //TODO CHANGE THESE ---------------------^ values to this.textureWidth and this.textureHeight;
 
-        protected Player(
-            Texture2D texture,
-            Vector2 possition,
-            int healthPoints,
-            int attackPoints,
-            int defencePoints,
-            int range)
-            : base (texture, possition, healthPoints, attackPoints, defencePoints, range)
-        {
-        }
+            
 
-        public int StepSize
-        {
-            get { return this.stepSize; }
-            private set { this.stepSize = value; }
-        }  
+
+        }
 
         public void Move(KeyboardState state, Map.Map map)
         {
-            //TODO FIX MOVEMENT ( NEED MORE KPK)
-            //TODO Character should implement Imovable (all imovables have vector2 position and method Move())
-
-
             if (state.IsKeyDown(Keys.Right))
             {
-                //playing the runRight animation
-                PlayAnimation("runRight");
+                base.MoveRight(this,map);
                 this.isMoving = true;
-                if (!((int)this.Position.X + this.StepSize >= map.Tiles.GetLength(1) * 50))
-                {
-                    int tempCol = (int)(this.Position.X + this.StepSize) / 50;
-                    int tempRol = (int)(this.Position.Y) / 50;
-                    if (map.CanStepOn(tempRol, tempCol))
-                        this.IncrementX(this.StepSize);
-                }
-            }
-
-            if (state.IsKeyDown(Keys.Down))
-            {
-                //playing the runDown animation
-                PlayAnimation("runDown");
-                this.isMoving = true;
-                if (!((int)this.Position.Y + this.StepSize >= map.Tiles.GetLength(0) * 50))
-                {
-                    int tempCol = (int)this.Position.X / 50;
-                    int tempRol = (int)(this.Position.Y + this.StepSize) / 50;
-                    if (map.CanStepOn(tempRol, tempCol))
-                        this.IncrementY(this.StepSize);
-                }
+                this.PlayAnimation("runRight");
             }
 
             if (state.IsKeyDown(Keys.Left))
             {
-                //playing the runLeft animation
-                PlayAnimation("runLeft");
+                base.MoveLeft(this,map);
                 this.isMoving = true;
-                if (!((int)this.Position.X - this.StepSize < 0))
-                {
-                    int tempCol = (int)(this.Position.X - this.StepSize) / 50;
-                    int tempRol = (int)(this.Position.Y) / 50;
-                    if (map.CanStepOn(tempRol, tempCol))
-                        this.IncrementX(-this.StepSize);
-                }
+                this.PlayAnimation("runLeft");
             }
-
             if (state.IsKeyDown(Keys.Up))
             {
-                //playing the runUp animation
-                PlayAnimation("runUp");
+                base.MoveUp(this, map);
                 this.isMoving = true;
-                if (!((int)this.Position.Y - this.StepSize < 0))
-                {
-                    int tempCol = (int)this.Position.X / 50;
-                    int tempRol = (int)(this.Position.Y - this.StepSize) / 50;
-                    if (map.CanStepOn(tempRol, tempCol))
-                        this.IncrementY(-this.StepSize);
-                }
+                this.PlayAnimation("runUp");
             }
+            if (state.IsKeyDown(Keys.Down))
+            {
+                base.MoveDown(this,map);
+                this.isMoving = true;
+                this.PlayAnimation("runDown");
+            }
+            
 
             //setting the state to idle if the player is not moving
             if (!this.isMoving)

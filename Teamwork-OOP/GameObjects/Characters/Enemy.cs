@@ -9,11 +9,11 @@ namespace Teamwork_OOP.GameObjects.Characters
     {
         private int stepSize;
 
-        public Enemy(Texture2D texture, Vector2 possition) 
-            : base(possition)
-        {
-            this.StepSize = 2;
-        }
+        //public Enemy(Texture2D texture, Vector2 possition) 
+        //: base(possition)
+        //{
+        //    this.StepSize = 2;
+        //}
 
         protected Enemy(
             Texture2D texture,
