@@ -20,6 +20,7 @@ namespace Teamwork_OOP.Engine
 
         //extract the texture loading
         private Player player;
+        private Enemy enemy;
         private Camera camera;
 
         private Map map;
@@ -39,6 +40,7 @@ namespace Teamwork_OOP.Engine
 
 
             this.player = new Player(Vector2.Zero);
+            this.enemy = new Enemy(new Vector2(500, 100));
 
 
             this.map = new Map();
@@ -55,6 +57,7 @@ namespace Teamwork_OOP.Engine
             // Create a new SpriteBatch, which can be used to draw textures.
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
             this.player.LoadContent(this.Content);
+            this.enemy.LoadContent(this.Content);
 
             TextureHandler.Load(this.Content);
         }
@@ -71,6 +74,7 @@ namespace Teamwork_OOP.Engine
             KeyboardState state = Keyboard.GetState();
             this.player.Move(state,this.map);
             this.player.Update(gameTime);
+            this.enemy.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -87,6 +91,7 @@ namespace Teamwork_OOP.Engine
             //this.spriteBatch.Draw(this.camera.CameraTexture, this.camera.CameraPossition);
             this.map.Tiles.ForEach(tile => this.spriteBatch.Draw(TextureHandler.GetTexture(tile.Type), tile.Position));
             this.player.Draw(this.spriteBatch);
+            this.enemy.Draw(this.spriteBatch);
 
             //end draw
             this.spriteBatch.End();
