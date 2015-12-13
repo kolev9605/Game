@@ -10,39 +10,32 @@ namespace Teamwork_OOP.GameObjects.Characters
     public abstract class Character : GameObject, IAttack, IMovable
     {
         private readonly uint id;
-
-        // Stats
+        private Texture2D characterTexture;
+        private Vector2 position;
         private int healthPoints;
-        private int attackPoints; 
+        private int attackPoints;
         private int defencePoints;
         private int range;
-
         private bool isAlive;
 
-        private Vector2 position;
-        
-        //TODO: Figure a way to remove this field and have the .x and .y setters work ( see increment method)
-
-        private Texture2D characterTexture;
-        //TODO: Add character StepSize ( how many pixels this travels on each step )
-        
-        // Constructor to set the initial possition and texture
-        protected Character(Vector2 possition,int stepSize, int textureHeight, int textureWidth)
+        protected Character(
+            Vector2 possition,
+            int healthPoints,
+            int attackPoints,
+            int defencePoints,
+            int range,
+            int stepSize,
+            int textureHeight,
+            int textureWidth)
         {
-            this.Position = possition;
-            this.StepSize = stepSize;
-            this.TextureHeight = textureHeight;
-            this.TextureWidth = textureWidth;
-        }
-
-        protected Character(Texture2D texture,Vector2 possition,int healthPoints,int attackPoints,int defencePoints,int range)
-        {
-            this.CharacterTexture = texture;
             this.Position = possition;
             this.HealthPoints = healthPoints;
             this.AttackPoints = attackPoints;
             this.DefencePoints = defencePoints;
             this.Range = range;
+            this.StepSize = stepSize;
+            this.TextureHeight = textureHeight;
+            this.TextureWidth = textureWidth;
         }
 
         //TODO: More validation
@@ -50,72 +43,6 @@ namespace Teamwork_OOP.GameObjects.Characters
         {
             get { return this.id; }
         }
-
-        public int HealthPoints
-        {
-            get { return this.healthPoints; }
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-                this.healthPoints = value;
-            }
-        }
-
-        public int AttackPoints
-        {
-            get { return this.attackPoints; }
-            set
-            {
-                if (value > 0)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-                this.attackPoints = value;
-            }
-        }
-
-        public void Attack(IAttackable target)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public int DefencePoints
-        {
-            get { return this.defencePoints; }
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-                this.defencePoints = value;
-            }
-        }
-
-        public bool IsAlive
-        {
-            get { return this.isAlive; }
-            set { this.isAlive = value; }
-        }
-
-        public int Range
-        {
-            get { return this.range; }
-            set
-            {
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
-                this.range = value;
-            }
-        }
-        //extracted character possition property
-        
-        //extracted character texture property
 
         public Texture2D CharacterTexture
         {
@@ -136,6 +63,47 @@ namespace Teamwork_OOP.GameObjects.Characters
             private set { this.position = value; }
         }
 
+        public int HealthPoints
+        {
+            get { return this.healthPoints; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                this.healthPoints = value;
+            }
+        }
+
+        public int AttackPoints { get; set; }
+
+        public int DefencePoints
+        {
+            get { return this.defencePoints; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                this.defencePoints = value;
+            }
+        }
+
+        public int Range
+        {
+            get { return this.range; }
+            set
+            {
+                if (value < 0)
+                {
+                    throw new ArgumentOutOfRangeException();
+                }
+                this.range = value;
+            }
+        }
+
         public int StepSize { get; set; }
 
         public void IncrementX(int value)
@@ -151,6 +119,17 @@ namespace Teamwork_OOP.GameObjects.Characters
         public int TextureWidth { get; set; }
 
         public int TextureHeight { get; set; }
+
+        public bool IsAlive
+        {
+            get { return this.isAlive; }
+            set { this.isAlive = value; }
+        }
+
+        public void Attack(IAttackable target)
+        {
+            throw new System.NotImplementedException();
+        }
 
         //if you want to check for all edges of the texture when moving 
         //UNCOMMENT commented sections from left and right movement

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Teamwork_OOP.Extentions;
 using Teamwork_OOP.GameObjects;
 using Teamwork_OOP.GameObjects.Characters;
+using Teamwork_OOP.GameObjects.Characters.PlayerClasses;
 using Teamwork_OOP.GameObjects.Map;
 using Teamwork_OOP.InputHandler;
 
@@ -39,7 +40,7 @@ namespace Teamwork_OOP.Engine
             //this.graphics.ApplyChanges();
 
 
-            this.player = new Player(Vector2.Zero);
+            this.player = new Warrior(Vector2.Zero);
             this.enemy = new Enemy(new Vector2(500, 100));
 
 

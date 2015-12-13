@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,12 +10,9 @@ using Teamwork_OOP.Interfaces;
 
 namespace Teamwork_OOP.GameObjects.Characters
 {
-    class Player : Character
+    public abstract class Player : Character
     {
-        private const int textureWidth = 113;
-        private const int textureHeight = 112;
-        //TODO THESE -------^ SHOULD BE TAKEN AUTOMATICALLY FROM TEXTURE OR WHATEVER
-        private const int default_stepSize = 4;
+
         private int frameIndex;
         private Texture2D playerSprite;
         private Dictionary<string, Rectangle[]> animations; // dictionary for storing all animations
@@ -23,8 +21,16 @@ namespace Teamwork_OOP.GameObjects.Characters
         private string currentAnimation;
         private bool isMoving;
 
-        public Player(Vector2 possition)
-            : base(possition,default_stepSize,textureHeight,textureWidth)
+        protected Player(
+            Vector2 position,
+            int healthPoints,
+            int attackPoints,
+            int defendPoints,
+            int range,
+            int stepSize,
+            int textureHeight,
+            int textureWidth)
+            : base(position, healthPoints, attackPoints, defendPoints, range, stepSize, textureHeight, textureWidth)
         {
             //setting the animation FPS to 12
             this.FramesPerSecond = 12;
@@ -35,20 +41,6 @@ namespace Teamwork_OOP.GameObjects.Characters
 
             //playing initial animation
             PlayAnimation("idleDown");
-            
-
-        }
-
-        protected Player(
-            Texture2D texture,
-            Vector2 possition,
-            int healthPoints,
-            int attackPoints,
-            int defencePoints,
-            int range)
-            : base(texture, possition, healthPoints, attackPoints, defencePoints, range)
-        {
-
         }
 
         public int FramesPerSecond
@@ -65,43 +57,21 @@ namespace Teamwork_OOP.GameObjects.Characters
             get { return this.playerSprite; }
             set { this.playerSprite = value; }
         }
-        
-        public void LoadContent(ContentManager content)
-        {
-            //loading the sprite sheet
-            this.playerSprite = content.Load<Texture2D>("player_sprite_V2");
 
-            //adding all animation to the dictionary
-
-            
-            AddAnimation(10, 113, 0, "runDown", 113, 112, new Vector2(0, 0));
-            AddAnimation(10, 113 * 2, 0, "runUp", 113, 112, new Vector2(0, 0));
-            AddAnimation(10, 113 * 3, 0, "runRight", 113, 112, new Vector2(0, 0));
-            AddAnimation(10, 113 * 5, 0, "runLeft", 113, 112, new Vector2(0, 0));
-            AddAnimation(3, 0, 0, "idleDown", 113, 112, new Vector2(0, 0));
-            //AddAnimation(3, 0, 4, "idleDownv2", 113, 112, new Vector2(0, 0));
-            AddAnimation(3, 0, 8, "idleUp", 113, 112, new Vector2(0, 0));
-            AddAnimation(3, 0, 12, "idleRight", 113, 112, new Vector2(0, 0));
-            AddAnimation(3, 113 * 2, 12, "idleLeft", 113, 112, new Vector2(0, 0));
-            //TODO CHANGE THESE ---------------------^ values to this.textureWidth and this.textureHeight;
-
-            
-
-
-        }
+        public abstract void LoadContent(ContentManager content);
 
         public void Move(KeyboardState state, Map.Map map)
         {
             if (state.IsKeyDown(Keys.Right))
             {
-                base.MoveRight(this,map);
+                base.MoveRight(this, map);
                 this.isMoving = true;
                 this.PlayAnimation("runRight");
             }
 
             if (state.IsKeyDown(Keys.Left))
             {
-                base.MoveLeft(this,map);
+                base.MoveLeft(this, map);
                 this.isMoving = true;
                 this.PlayAnimation("runLeft");
             }
@@ -113,11 +83,11 @@ namespace Teamwork_OOP.GameObjects.Characters
             }
             if (state.IsKeyDown(Keys.Down))
             {
-                base.MoveDown(this,map);
+                base.MoveDown(this, map);
                 this.isMoving = true;
                 this.PlayAnimation("runDown");
             }
-            
+
 
             //setting the state to idle if the player is not moving
             if (!this.isMoving)
@@ -168,7 +138,7 @@ namespace Teamwork_OOP.GameObjects.Characters
             {
                 //TODO VALIDATE WITH EXCEPTION
             }
-            
+
         }
 
         public void Update(GameTime gameTime)

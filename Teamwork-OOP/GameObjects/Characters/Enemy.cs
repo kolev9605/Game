@@ -11,7 +11,12 @@ namespace Teamwork_OOP.GameObjects.Characters
         private const int textureWidth = 80;
         private const int textureHeight = 56;
         //TODO THESE -------^ SHOULD BE TAKEN AUTOMATICALLY FROM TEXTURE OR WHATEVER
-        private const int Default_stepSize = 4;
+        private const int default_stepSize = 4;
+        private const int default_health = 15;
+        private const int default_defense= 15;
+        private const int default_attack = 5;
+        private const int default_range = 5;
+
         private int frameIndex;
         private Texture2D enemySprite;
         private Dictionary<string, Rectangle[]> animations; // dictionary for storing all animations
@@ -21,7 +26,7 @@ namespace Teamwork_OOP.GameObjects.Characters
         private bool isMoving;
 
         public Enemy(Vector2 position)
-            : base(position, Default_stepSize,textureHeight,textureWidth)
+            : base(position,default_health,default_attack,default_defense,default_range,default_stepSize,textureHeight,textureWidth)
         {
             //setting the animation FPS to 12
             this.FramesPerSecond = 12;
@@ -36,12 +41,12 @@ namespace Teamwork_OOP.GameObjects.Characters
 
         protected Enemy(
             Texture2D texture,
-            Vector2 possition,
+            Vector2 position,
             int healthPoints,
             int attackPoints,
             int defencePoints,
             int range)
-            : base(texture, possition, healthPoints, attackPoints, defencePoints, range)
+            : base(position,healthPoints,attackPoints,defencePoints,range,default_stepSize,textureHeight,textureWidth)
         {
 
         }
