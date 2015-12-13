@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 
 namespace Teamwork_OOP.GameObjects.Characters
 {
@@ -68,8 +67,6 @@ namespace Teamwork_OOP.GameObjects.Characters
             this.enemySprite = content.Load<Texture2D>("monster-lizard");
 
             //adding all animation to the dictionary
-
-
             AddAnimation(5, 56 * 0, 0, "runRight", 80, 56, new Vector2(0, 0));
             AddAnimation(5, 56 * 2, 0, "runLeft", 80, 56, new Vector2(0, 0));
             AddAnimation(5, 56 * 4, 0, "runDown", 80, 56, new Vector2(0, 0));
@@ -107,7 +104,6 @@ namespace Teamwork_OOP.GameObjects.Characters
             {
                 //TODO VALIDATE WITH EXCEPTION
             }
-
         }
 
         public void Update(GameTime gameTime)
