@@ -1,63 +1,31 @@
 ﻿using System.IO;
 using Microsoft.Xna.Framework;
+using Teamwork_OOP.Factories;
 using Teamwork_OOP.GameObjects.Map.Tiles;
+using Teamwork_OOP.Interfaces;
 
 namespace Teamwork_OOP.GameObjects.Map
 {
-    public class Map
+    public class Map : IMap
     {
-        private const int tile_dimention = 50;
-
-        public Map()
+        public Map(string mapSRC, int tileWidth, int tileHeight)
         {
+            this.Src = mapSRC;
+            this.TileWidth = tileWidth;
+            this.TileHeight = tileHeight;
         }
 
-        public static int TILE_DIMENTION
+        public string Src { get; set; }
+
+        public ITile[,] Tiles { get; set; }
+
+        public int TileWidth { get; private set; }
+
+        public int TileHeight { get; private set; }
+        
+        public void Initialize(IMapFactory mapFactory, ITileFactory tileFactory)
         {
-            get { return tile_dimention; }
-        }
-
-        public Tile[,] Tiles { get; private set; }
-
-        //TODO become ReadLevel which initializes level from file
-        public void Initialize()
-        {
-
-            //StreamReader reader = new StreamReader(string.Format("../../using/Level{0}.txt", currentLevel));
-            //TODO THIS ^
-            StreamReader reader = new StreamReader("../../../Content/Levels/Level1.txt");
-            using (reader)
-            {
-                string[] line = reader.ReadLine().Split();
-                int rows = int.Parse(line[0]);
-                int cols = int.Parse(line[1]);
-
-                this.Tiles = new Tile[rows, cols];
-
-                string getLine = reader.ReadLine();
-                int currentLine = 0;
-                while (getLine != null)
-                {
-                    for (int i = 0; i < getLine.Length; i++)
-                    {
-                        //TODO add cases to this switch for new tiles
-                        switch (getLine[i])
-                        {
-                            case 'G':
-                                this.Tiles[currentLine, i] = new Tile("grass_tile", true, new Vector2(i * 50, currentLine * 50));
-                                continue;
-                            case 'R':
-                                this.Tiles[currentLine, i] = new Tile("rock_tile", false, new Vector2(i * 50, currentLine * 50));
-                                continue;
-                        }
-                        //TODO true and false in TILE constructor should be gone => tile should set those based on type
-
-                    }
-
-                    getLine = reader.ReadLine();
-                    currentLine++;
-                }
-            }
+            mapFactory.Initialize(this, this.Src, tileFactory);
         }
 
     }

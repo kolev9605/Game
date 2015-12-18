@@ -134,54 +134,54 @@ namespace Teamwork_OOP.GameObjects.Characters
         //if you want to check for all edges of the texture when moving 
         //UNCOMMENT commented sections from left and right movement
         //REMOVE ctrl + f => shouldRemoveThis
-        public void MoveRight(IMovable dude, Map.Map map)
+        public void MoveRight(IMovable dude, IMap map)
         {
-            if (!((int)this.Position.X + this.StepSize + this.TextureWidth >= map.Tiles.GetLength(1) * Map.Map.TILE_DIMENTION))
+            if (!((int)this.Position.X + this.StepSize + this.TextureWidth >= map.Tiles.GetLength(1) * map.TileWidth))
             {
-                int tempCol1 = (int)(this.Position.X + this.StepSize + this.TextureWidth) / Map.Map.TILE_DIMENTION;
+                int tempCol1 = (int)(this.Position.X + this.StepSize + this.TextureWidth) / map.TileWidth;
 
                 //int tempRol1 = (int)(this.Position.Y) / Map.Map.TILE_DIMENTION;
-                int tempRol2 = (int)(this.Position.Y + this.TextureHeight) / Map.Map.TILE_DIMENTION;
+                int tempRol2 = (int)(this.Position.Y + this.TextureHeight) / map.TileHeight;
                 if (CollisionHandler.IsTileSteppable(tempRol2, tempCol1, map)/*&& CollisionHandler.IsTileSteppable(tempRol1, tempCol1,map)*/)
                     this.IncrementX(this.StepSize);
             }
         }
 
-        public void MoveLeft(IMovable dude, Map.Map map)
+        public void MoveLeft(IMovable dude, IMap map)
         {
             if (!((int)this.Position.X - this.StepSize < 0))
             {
-                int tempCol1 = (int)(this.Position.X - this.StepSize) / Map.Map.TILE_DIMENTION;
+                int tempCol1 = (int)(this.Position.X - this.StepSize) / map.TileWidth;
 
                 //int tempRol1 = (int)(this.Position.Y) / Map.Map.TILE_DIMENTION;
-                int tempRol2 = (int)(this.Position.Y + this.TextureHeight) / Map.Map.TILE_DIMENTION;
+                int tempRol2 = (int)(this.Position.Y + this.TextureHeight) / map.TileHeight;
                 if (CollisionHandler.IsTileSteppable(tempRol2, tempCol1, map)/*&& CollisionHandler.IsTileSteppable(tempRol1, tempCol1,map)*/ )
                     this.IncrementX(-this.StepSize);
             }
         }
 
-        public void MoveUp(IMovable dude, Map.Map map)
+        public void MoveUp(IMovable dude, IMap map)
         {
             if (!((int)this.Position.Y - this.StepSize < 0))
             {
-                int tempCol1 = (int)this.Position.X / Map.Map.TILE_DIMENTION;
-                int tempCol2 = (int)(this.Position.X + this.TextureWidth) / Map.Map.TILE_DIMENTION;
+                int tempCol1 = (int)this.Position.X / map.TileWidth;
+                int tempCol2 = (int)(this.Position.X + this.TextureWidth) / map.TileWidth;
 
-                int tempRol1 = (int)(this.Position.Y + this.TextureHeight - this.StepSize) / Map.Map.TILE_DIMENTION;
+                int tempRol1 = (int)(this.Position.Y + this.TextureHeight - this.StepSize) / map.TileHeight;
                 //^ shouldRemoveThis
                 if (CollisionHandler.IsTileSteppable(tempRol1, tempCol1, map) && CollisionHandler.IsTileSteppable(tempRol1, tempCol2, map))
                     this.IncrementY(-this.StepSize);
             }
         }
 
-        public void MoveDown(IMovable dude, Map.Map map)
+        public void MoveDown(IMovable dude, IMap map)
         {
-            if (!((int)this.Position.Y + this.StepSize + this.TextureHeight >= map.Tiles.GetLength(0) * Map.Map.TILE_DIMENTION))
+            if (!((int)this.Position.Y + this.StepSize + this.TextureHeight >= map.Tiles.GetLength(0) * map.TileHeight))
             {
-                int tempCol1 = (int)this.Position.X / Map.Map.TILE_DIMENTION;
-                int tempCol2 = (int)(this.Position.X + this.TextureWidth) / Map.Map.TILE_DIMENTION;
+                int tempCol1 = (int)this.Position.X / map.TileWidth;
+                int tempCol2 = (int)(this.Position.X + this.TextureWidth) / map.TileWidth;
 
-                int tempRol1 = (int)(this.Position.Y + this.StepSize + this.TextureHeight) / Map.Map.TILE_DIMENTION;
+                int tempRol1 = (int)(this.Position.Y + this.StepSize + this.TextureHeight) / map.TileHeight;
                 if (CollisionHandler.IsTileSteppable(tempRol1, tempCol1, map) && CollisionHandler.IsTileSteppable(tempRol1, tempCol2, map))
                     this.IncrementY(this.StepSize);
             }

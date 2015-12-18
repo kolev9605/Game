@@ -60,7 +60,7 @@ namespace Teamwork_OOP.GameObjects.Characters
 
         public abstract void LoadContent(ContentManager content);
 
-        public void Move(KeyboardState state, Map.Map map)
+        public void Move(KeyboardState state, IMap map)
         {
             if (state.IsKeyDown(Keys.Right))
             {

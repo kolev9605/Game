@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Runtime.InteropServices;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Teamwork_OOP.Extentions;
@@ -7,6 +8,7 @@ using Teamwork_OOP.GameObjects.Characters;
 using Teamwork_OOP.GameObjects.Characters.PlayerClasses;
 using Teamwork_OOP.GameObjects.Map;
 using Teamwork_OOP.InputHandler;
+using Teamwork_OOP.Interfaces;
 
 namespace Teamwork_OOP.Engine
 {
@@ -23,14 +25,20 @@ namespace Teamwork_OOP.Engine
         private Player player;
         private Enemy enemy;
         private Camera camera;
+        private IMap map;
 
-        private Map map;
-
-        public Engine()
+        public Engine(IMap map, IMapFactory mapFactory, ITileFactory tileFactory)
         {
             this.graphics = new GraphicsDeviceManager(this);
             this.Content.RootDirectory = "Content";
+            this.map = map;
+            this.MapFactory = mapFactory;
+            this.TileFactory = tileFactory;
         }
+
+        public IMapFactory MapFactory { get; set; }
+
+        public ITileFactory TileFactory { get; set; }
 
         protected override void Initialize()
         {
@@ -44,9 +52,7 @@ namespace Teamwork_OOP.Engine
             this.enemy = new Enemy(new Vector2(500, 100));
 
 
-            this.map = new Map();
-            this.map.Initialize();
-
+            this.map.Initialize(this.MapFactory, this.TileFactory);
             
             
             base.Initialize();

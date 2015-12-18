@@ -39,6 +39,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Extentions\Extentions.cs" />
+    <Compile Include="Factories\MapFactory.cs" />
+    <Compile Include="Factories\TileFactory.cs" />
     <Compile Include="GameObjects\Camera.cs" />
     <Compile Include="GameObjects\Characters\Character.cs" />
     <Compile Include="Engine\Engine.cs" />
@@ -52,7 +54,11 @@
     <Compile Include="Handlers\CollisionHandler.cs" />
     <Compile Include="Handlers\InputHandler.cs" />
     <Compile Include="Handlers\TextureHandler.cs" />
+    <Compile Include="Interfaces\IMap.cs" />
+    <Compile Include="Interfaces\IMapFactory.cs" />
     <Compile Include="Interfaces\IMovable.cs" />
+    <Compile Include="Interfaces\ITile.cs" />
+    <Compile Include="Interfaces\ITileFactory.cs" />
     <Compile Include="States\State.cs" />
     <Compile Include="Interfaces\IAttack.cs" />
     <Compile Include="Interfaces\IAttackable.cs" />

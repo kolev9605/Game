@@ -10,15 +10,14 @@ namespace Teamwork_OOP.Interfaces
         int TextureWidth { get; set; }
 
         int TextureHeight { get; set; }
-        
 
-        void MoveRight(IMovable dude, Map map);
+        void MoveRight(IMovable dude, IMap map);
 
-        void MoveLeft(IMovable dude, Map map);
+        void MoveLeft(IMovable dude, IMap map);
 
-        void MoveUp(IMovable dude, Map map);
+        void MoveUp(IMovable dude, IMap map);
 
-        void MoveDown(IMovable dude, Map map);
+        void MoveDown(IMovable dude, IMap map);
 
 
         void IncrementX(int value);

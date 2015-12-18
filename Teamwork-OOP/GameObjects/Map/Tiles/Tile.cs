@@ -1,11 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
+using Teamwork_OOP.Interfaces;
 
 namespace Teamwork_OOP.GameObjects.Map.Tiles
 {
-    public class Tile 
+    public class Tile : ITile
     {
         private bool isSteppable;
-        private int stepBonus;
         private string type;
         private Vector2 position;
 
@@ -21,11 +21,7 @@ namespace Teamwork_OOP.GameObjects.Map.Tiles
 
         public bool IsSteppable { get; set; }
 
-        public int StepBonus { get; set; }
-
         public string Type{ get; set; }
-
-
         
     }
 }
