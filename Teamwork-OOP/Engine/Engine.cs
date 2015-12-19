@@ -24,7 +24,8 @@ namespace Teamwork_OOP.Engine
 
         //extract the texture loading
         private IAct player;
-        private IAct enemy;
+        private IAct shadow;
+        private IAct skeleton;
         private Camera camera;
         private IMap map;
 
@@ -50,7 +51,8 @@ namespace Teamwork_OOP.Engine
 
 
             this.player = new Warrior(Vector2.Zero);
-            this.enemy = new Mob(new Vector2(500, 100));
+            this.shadow = new Shadow(new Vector2(200, 100));
+            this.skeleton = new Skeleton(new Vector2(300, 100));
 
 
             this.map.Initialize(this.MapFactory, this.TileFactory);
@@ -65,7 +67,8 @@ namespace Teamwork_OOP.Engine
             // Create a new SpriteBatch, which can be used to draw textures.
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
             this.player.LoadContent(this.Content);
-            this.enemy.LoadContent(this.Content);
+            this.shadow.LoadContent(this.Content);
+            this.skeleton.LoadContent(this.Content);
 
             TextureHandler.Load(this.Content);
         }
@@ -82,7 +85,8 @@ namespace Teamwork_OOP.Engine
             KeyboardState state = Keyboard.GetState();
             this.player.Act(state,this.map);
             this.player.Update(gameTime);
-            this.enemy.Update(gameTime);
+            this.shadow.Update(gameTime);
+            this.skeleton.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -99,7 +103,8 @@ namespace Teamwork_OOP.Engine
             //this.spriteBatch.Draw(this.camera.CameraTexture, this.camera.CameraPossition);
             this.map.Tiles.ForEach(tile => this.spriteBatch.Draw(TextureHandler.GetTexture(tile.Type), tile.Position));
             this.player.Draw(this.spriteBatch);
-            this.enemy.Draw(this.spriteBatch);
+            this.shadow.Draw(this.spriteBatch);
+            this.skeleton.Draw(this.spriteBatch);
 
             //end draw
             this.spriteBatch.End();

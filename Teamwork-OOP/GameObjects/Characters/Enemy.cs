@@ -11,7 +11,9 @@ namespace Teamwork_OOP.GameObjects.Characters
     class Enemy : Character
     {
 
-        public Enemy(string type, 
+        public Enemy(
+            string spriteTexturePath, 
+            string type,
             Vector2 position, 
             int health,
             int attack, 
@@ -20,7 +22,16 @@ namespace Teamwork_OOP.GameObjects.Characters
             int stepSize,
             int textureHeight,
             int textureWidth)
-            : base(type,position, health, attack, defense, range, stepSize,textureHeight,textureWidth)
+            : base(spriteTexturePath,
+                  type, 
+                  position, 
+                  health, 
+                  attack, 
+                  defense, 
+                  range, 
+                  stepSize,
+                  textureHeight,
+                  textureWidth)
         {
             
             PlayAnimation("idleDown");

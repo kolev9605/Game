@@ -21,6 +21,7 @@ namespace Teamwork_OOP.GameObjects.Characters
         private int range;
 
         protected Character(
+            string spriteTexturePath,
             string type,
             Vector2 position,
             int healthPoints,
@@ -31,6 +32,7 @@ namespace Teamwork_OOP.GameObjects.Characters
             int textureHeight,
             int textureWidth)
         {
+            this.SpriteTexturePath = spriteTexturePath;
             this.Type = type;
             this.Position = position;
             this.HealthPoints = healthPoints;
@@ -42,7 +44,7 @@ namespace Teamwork_OOP.GameObjects.Characters
             this.TextureWidth = textureWidth;
 
 
-            this.FramesPerSecond = 12;
+            this.FramesPerSecond = 5;
             this.IsMoving = false;
             this.Animations = new Dictionary<string, Rectangle[]>();
 
@@ -54,6 +56,8 @@ namespace Teamwork_OOP.GameObjects.Characters
         {
             get { return this.id; }
         }
+
+        public string SpriteTexturePath { get; set; }
 
         public string Type { get; set; }
 
@@ -146,11 +150,11 @@ namespace Teamwork_OOP.GameObjects.Characters
 
         public void LoadContent(ContentManager content)
         {
-            this.CharacterTexture = content.Load<Texture2D>(this.Type);
+            this.CharacterTexture = content.Load<Texture2D>(this.SpriteTexturePath);
             //TODO fix this switch so the code is reusable
             switch (this.Type)
             {
-                case "player_sprite":
+                case "warrior":
                     this.AddAnimation(10, 113, 0, "runDown", 113, 112, new Vector2(0, 0));
                     this.AddAnimation(10, 113 * 2, 0, "runUp", 113, 112, new Vector2(0, 0));
                     this.AddAnimation(10, 113 * 3, 0, "runRight", 113, 112, new Vector2(0, 0));
@@ -160,15 +164,35 @@ namespace Teamwork_OOP.GameObjects.Characters
                     this.AddAnimation(3, 0, 12, "idleRight", 113, 112, new Vector2(0, 0));
                     this.AddAnimation(3, 113 * 2, 12, "idleLeft", 113, 112, new Vector2(0, 0));
                     break;
-                case "monster-lizard":
-                    AddAnimation(5, 56 * 1, 0, "runRight", 80, 56, new Vector2(0, 0));
-                    AddAnimation(5, 56 * 2, 0, "runLeft", 80, 56, new Vector2(0, 0));
-                    AddAnimation(5, 56 * 4, 0, "runDown", 80, 56, new Vector2(0, 0));
-                    AddAnimation(5, 56 * 6, 0, "runUp", 80, 56, new Vector2(0, 0));
-                    AddAnimation(5, 56 * 1, 0, "idleRight", 80, 56, new Vector2(0, 0));
-                    AddAnimation(5, 56 * 3, 0, "idleLeft", 80, 56, new Vector2(0, 0));
-                    AddAnimation(5, 56 * 5, 0, "idleDown", 80, 56, new Vector2(0, 0));
-                    AddAnimation(5, 56 * 7, 0, "idleUp", 80, 56, new Vector2(0, 0));
+                //case "monster-lizard":
+                //    AddAnimation(5, 56 * 1, 0, "runRight", 80, 56, new Vector2(0, 0));
+                //    AddAnimation(5, 56 * 2, 0, "runLeft", 80, 56, new Vector2(0, 0));
+                //    AddAnimation(5, 56 * 4, 0, "runDown", 80, 56, new Vector2(0, 0));
+                //    AddAnimation(5, 56 * 6, 0, "runUp", 80, 56, new Vector2(0, 0));
+                //    AddAnimation(5, 56 * 1, 0, "idleRight", 80, 56, new Vector2(0, 0));
+                //    AddAnimation(5, 56 * 3, 0, "idleLeft", 80, 56, new Vector2(0, 0));
+                //    AddAnimation(5, 56 * 5, 0, "idleDown", 80, 56, new Vector2(0, 0));
+                //    AddAnimation(5, 56 * 7, 0, "idleUp", 80, 56, new Vector2(0, 0));
+                //    break;
+                case "shadow":
+                    AddAnimation(3, 32 * 0, 3, "runRight", 32, 32, new Vector2(0, 0));
+                    AddAnimation(3, 32 * 0, 9, "runLeft", 32, 32, new Vector2(0, 0));
+                    AddAnimation(3, 32 * 0, 0, "runDown", 32, 32, new Vector2(0, 0));
+                    AddAnimation(3, 32 * 0, 6, "runUp", 32, 32, new Vector2(0, 0));
+                    AddAnimation(3, 32 * 0, 3, "idleRight", 32, 32, new Vector2(0, 0));
+                    AddAnimation(3, 32 * 0, 9, "idleLeft", 32, 32, new Vector2(0, 0));
+                    AddAnimation(3, 32 * 0, 0, "idleDown", 32, 32, new Vector2(0, 0));
+                    AddAnimation(3, 32 * 0, 6, "idleUp", 32, 32, new Vector2(0, 0));
+                    break;
+                case "skeleton":
+                    AddAnimation(3, 32 * 1, 3, "runRight", 32, 32, new Vector2(0, 0));
+                    AddAnimation(3, 32 * 1, 9, "runLeft", 32, 32, new Vector2(0, 0));
+                    AddAnimation(3, 32 * 1, 0, "runDown", 32, 32, new Vector2(0, 0));
+                    AddAnimation(3, 32 * 1, 6, "runUp", 32, 32, new Vector2(0, 0));
+                    AddAnimation(3, 32 * 1, 3, "idleRight", 32, 32, new Vector2(0, 0));
+                    AddAnimation(3, 32 * 1, 9, "idleLeft", 32, 32, new Vector2(0, 0));
+                    AddAnimation(3, 32 * 1, 0, "idleDown", 32, 32, new Vector2(0, 0));
+                    AddAnimation(3, 32 * 1, 6, "idleUp", 32, 32, new Vector2(0, 0));
                     break;
             }
         }

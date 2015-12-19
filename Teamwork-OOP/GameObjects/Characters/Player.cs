@@ -13,6 +13,7 @@ namespace Teamwork_OOP.GameObjects.Characters
     public abstract class Player : Character
     {
         protected Player(
+            string spriteTexturePath,
             string type,
             Vector2 position,
             int healthPoints,
@@ -22,7 +23,17 @@ namespace Teamwork_OOP.GameObjects.Characters
             int stepSize,
             int textureHeight,
             int textureWidth)
-            : base(type,position, healthPoints, attackPoints, defendPoints, range, stepSize, textureHeight, textureWidth)
+            : base(
+                  spriteTexturePath,
+                  type,
+                  position, 
+                  healthPoints, 
+                  attackPoints, 
+                  defendPoints, 
+                  range, 
+                  stepSize, 
+                  textureHeight, 
+                  textureWidth)
         {
             
         }

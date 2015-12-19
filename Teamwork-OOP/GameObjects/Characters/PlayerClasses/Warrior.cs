@@ -8,7 +8,8 @@ namespace Teamwork_OOP.GameObjects.Characters.PlayerClasses
 {
     class Warrior : Player
     {
-        private const string type = "player_sprite";
+        private const string SpriteTexturePath = "player_sprite";
+        private const string Type = "warrior";
 
         private const int textureWidth = 113;
         private const int textureHeight = 112;
@@ -19,9 +20,11 @@ namespace Teamwork_OOP.GameObjects.Characters.PlayerClasses
         private const int DefaultRange = 1;
         private const int default_stepSize = 2;
 
-        public Warrior(Vector2 possition)
-            : base(type,
-                  possition, 
+        public Warrior(Vector2 position)
+            : base(
+                  SpriteTexturePath,
+                  Type,
+                  position, 
                   DefaultHealthPoints, 
                   DefaultAttackPoints, 
                   DefaultDefensePoints, 
