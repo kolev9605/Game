@@ -24,7 +24,6 @@ namespace Teamwork_OOP.Factories
                 {
                     for (int i = 0; i < getLine.Length; i++)
                     {
-                        //TODO add cases to this switch for new tiles
                         switch (getLine[i])
                         {
                             case 'G':

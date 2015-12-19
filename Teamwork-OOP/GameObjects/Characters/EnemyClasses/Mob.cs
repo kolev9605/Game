@@ -9,13 +9,28 @@ namespace Teamwork_OOP.GameObjects.Characters.EnemyClasses
 {
     class Mob : Enemy
     {
+        private const string type = "monster-lizard";
+
+        private const int textureWidth = 80;
+        private const int textureHeight = 56;
+
         private const int DefaultHealthPoints = 1;
         private const int DefaultAttackPoints = 1;
         private const int DefaultDefensePoints = 1;
         private const int DefaultRange = 1;
+        private const int DefaultStepSize = 1;
 
-        public Mob(Texture2D texture, Vector2 position) 
-            : base(texture, position, DefaultHealthPoints, DefaultAttackPoints, DefaultDefensePoints, DefaultRange)
+
+        public Mob(Vector2 position) 
+            : base(type, 
+                  position,
+                  DefaultHealthPoints,
+                  DefaultAttackPoints,
+                  DefaultDefensePoints,
+                  DefaultRange,
+                  DefaultStepSize,
+                  textureHeight,
+                  textureWidth)
         {
         }
     }

@@ -1,11 +1,7 @@
-﻿using System.IO;
-using Microsoft.Xna.Framework;
-using Teamwork_OOP.Factories;
-using Teamwork_OOP.GameObjects.Map.Tiles;
-using Teamwork_OOP.Interfaces;
-
-namespace Teamwork_OOP.GameObjects.Map
+﻿namespace Teamwork_OOP.GameObjects.Map
 {
+    using Teamwork_OOP.Interfaces;
+
     public class Map : IMap
     {
         public Map(string mapSRC, int tileWidth, int tileHeight)

@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Input;
 using Teamwork_OOP.Extentions;
 using Teamwork_OOP.GameObjects;
 using Teamwork_OOP.GameObjects.Characters;
+using Teamwork_OOP.GameObjects.Characters.EnemyClasses;
 using Teamwork_OOP.GameObjects.Characters.PlayerClasses;
 using Teamwork_OOP.GameObjects.Map;
 using Teamwork_OOP.InputHandler;
@@ -22,8 +23,8 @@ namespace Teamwork_OOP.Engine
 
 
         //extract the texture loading
-        private Player player;
-        private Enemy enemy;
+        private IAct player;
+        private IAct enemy;
         private Camera camera;
         private IMap map;
 
@@ -49,7 +50,7 @@ namespace Teamwork_OOP.Engine
 
 
             this.player = new Warrior(Vector2.Zero);
-            this.enemy = new Enemy(new Vector2(500, 100));
+            this.enemy = new Mob(new Vector2(500, 100));
 
 
             this.map.Initialize(this.MapFactory, this.TileFactory);
@@ -79,7 +80,7 @@ namespace Teamwork_OOP.Engine
                 Exit();
 
             KeyboardState state = Keyboard.GetState();
-            this.player.Move(state,this.map);
+            this.player.Act(state,this.map);
             this.player.Update(gameTime);
             this.enemy.Update(gameTime);
             base.Update(gameTime);

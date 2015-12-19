@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Teamwork_OOP.InputHandler;
 using Teamwork_OOP.Interfaces;
 
 namespace Teamwork_OOP.GameObjects.Characters
 {
-    public abstract class Character : GameObject, IAttack, IMovable
+    public abstract class Character : GameObject, IAttack, IMovable, IAct
     {
         private readonly uint id;
         private Texture2D characterTexture;
@@ -16,9 +19,9 @@ namespace Teamwork_OOP.GameObjects.Characters
         private int attackPoints;
         private int defencePoints;
         private int range;
-        private bool isAlive;
 
         protected Character(
+            string type,
             Vector2 position,
             int healthPoints,
             int attackPoints,
@@ -28,6 +31,7 @@ namespace Teamwork_OOP.GameObjects.Characters
             int textureHeight,
             int textureWidth)
         {
+            this.Type = type;
             this.Position = position;
             this.HealthPoints = healthPoints;
             this.AttackPoints = attackPoints;
@@ -36,6 +40,13 @@ namespace Teamwork_OOP.GameObjects.Characters
             this.StepSize = stepSize;
             this.TextureHeight = textureHeight;
             this.TextureWidth = textureWidth;
+
+
+            this.FramesPerSecond = 12;
+            this.IsMoving = false;
+            this.Animations = new Dictionary<string, Rectangle[]>();
+
+            PlayAnimation("idleDown");
         }
 
         //TODO: More validation
@@ -43,6 +54,8 @@ namespace Teamwork_OOP.GameObjects.Characters
         {
             get { return this.id; }
         }
+
+        public string Type { get; set; }
 
         public Texture2D CharacterTexture
         {
@@ -56,6 +69,10 @@ namespace Teamwork_OOP.GameObjects.Characters
                 this.characterTexture = value;
             }
         }
+
+        public int TextureWidth { get; set; }
+
+        public int TextureHeight { get; set; }
 
         public Vector2 Position
         {
@@ -106,30 +123,116 @@ namespace Teamwork_OOP.GameObjects.Characters
 
         public int StepSize { get; set; }
 
-        public void IncrementX(int value)
+        public bool IsMoving { get; set; }
+
+        public bool IsAlive { get; set; }
+        
+
+        public Dictionary<string, Rectangle[]> Animations { get; set; }
+
+        public int FramesPerSecond
         {
-            this.position.X += value;
+            set
+            {
+                this.TimeToUpdate = (1f / value);
+            }
         }
 
-        public void IncrementY(int value)
+        public int FrameIndex { get; set; }
+
+        public double TimeElapsed { get; set; }
+
+        public double TimeToUpdate { get; set; }
+
+        public void LoadContent(ContentManager content)
         {
-            this.position.Y += value;
+            this.CharacterTexture = content.Load<Texture2D>(this.Type);
+            //TODO fix this switch so the code is reusable
+            switch (this.Type)
+            {
+                case "player_sprite":
+                    this.AddAnimation(10, 113, 0, "runDown", 113, 112, new Vector2(0, 0));
+                    this.AddAnimation(10, 113 * 2, 0, "runUp", 113, 112, new Vector2(0, 0));
+                    this.AddAnimation(10, 113 * 3, 0, "runRight", 113, 112, new Vector2(0, 0));
+                    this.AddAnimation(10, 113 * 5, 0, "runLeft", 113, 112, new Vector2(0, 0));
+                    this.AddAnimation(3, 0, 0, "idleDown", 113, 112, new Vector2(0, 0));
+                    this.AddAnimation(3, 0, 8, "idleUp", 113, 112, new Vector2(0, 0));
+                    this.AddAnimation(3, 0, 12, "idleRight", 113, 112, new Vector2(0, 0));
+                    this.AddAnimation(3, 113 * 2, 12, "idleLeft", 113, 112, new Vector2(0, 0));
+                    break;
+                case "monster-lizard":
+                    AddAnimation(5, 56 * 1, 0, "runRight", 80, 56, new Vector2(0, 0));
+                    AddAnimation(5, 56 * 2, 0, "runLeft", 80, 56, new Vector2(0, 0));
+                    AddAnimation(5, 56 * 4, 0, "runDown", 80, 56, new Vector2(0, 0));
+                    AddAnimation(5, 56 * 6, 0, "runUp", 80, 56, new Vector2(0, 0));
+                    AddAnimation(5, 56 * 1, 0, "idleRight", 80, 56, new Vector2(0, 0));
+                    AddAnimation(5, 56 * 3, 0, "idleLeft", 80, 56, new Vector2(0, 0));
+                    AddAnimation(5, 56 * 5, 0, "idleDown", 80, 56, new Vector2(0, 0));
+                    AddAnimation(5, 56 * 7, 0, "idleUp", 80, 56, new Vector2(0, 0));
+                    break;
+            }
         }
 
-        public int TextureWidth { get; set; }
-
-        public int TextureHeight { get; set; }
-
-        public bool IsAlive
+        public void AddAnimation(int frames, int y, int startFrame, string name, int width, int height, Vector2 offset)
         {
-            get { return this.isAlive; }
-            set { this.isAlive = value; }
+            Rectangle[] currAnimation = new Rectangle[frames];
+            
+            for (int i = 0; i < frames; i++)
+            {
+                currAnimation[i] = new Rectangle((i + startFrame) * width, y, width, height);
+            }
+            
+            if (!this.Animations.ContainsKey(name))
+            {
+                this.Animations.Add(name, currAnimation);
+            }
+            else
+            {
+                //TODO VALIDATE WITH EXCEPTION
+            }
         }
 
-        public void Attack(IAttackable target)
+        public void PlayAnimation(string name)
         {
-            throw new System.NotImplementedException();
+            if (this.CurrentAnimation != name)
+            {
+                this.CurrentAnimation = name;
+                this.FrameIndex = 0;
+            }
         }
+
+        public string CurrentAnimation { get; set; }
+        
+
+        public abstract void Act(KeyboardState state, IMap map);
+
+        public void Update(GameTime gameTime)
+        {
+            //calculating the time to update the animation
+            this.TimeElapsed += gameTime.ElapsedGameTime.TotalSeconds;
+            if (this.TimeElapsed > this.TimeToUpdate)
+            {
+                this.TimeElapsed -= this.TimeToUpdate;
+
+                if (this.FrameIndex < this.Animations[this.CurrentAnimation].Length - 1)
+                {
+                    this.FrameIndex += 1;
+                }
+                else
+                {
+                    this.FrameIndex = 0;
+                }
+            }
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(this.characterTexture, this.Position, this.Animations[this.CurrentAnimation][this.FrameIndex], Color.White);
+        }
+
+        public abstract void Attack(KeyboardState state, IMap map);
+
+        public abstract void Move(KeyboardState state, IMap map);
 
         //if you want to check for all edges of the texture when moving 
         //UNCOMMENT commented sections from left and right movement
@@ -146,7 +249,6 @@ namespace Teamwork_OOP.GameObjects.Characters
                     this.IncrementX(this.StepSize);
             }
         }
-
         public void MoveLeft(IMovable dude, IMap map)
         {
             if (!((int)this.Position.X - this.StepSize < 0))
@@ -159,7 +261,6 @@ namespace Teamwork_OOP.GameObjects.Characters
                     this.IncrementX(-this.StepSize);
             }
         }
-
         public void MoveUp(IMovable dude, IMap map)
         {
             if (!((int)this.Position.Y - this.StepSize < 0))
@@ -173,7 +274,6 @@ namespace Teamwork_OOP.GameObjects.Characters
                     this.IncrementY(-this.StepSize);
             }
         }
-
         public void MoveDown(IMovable dude, IMap map)
         {
             if (!((int)this.Position.Y + this.StepSize + this.TextureHeight >= map.Tiles.GetLength(0) * map.TileHeight))
@@ -187,6 +287,15 @@ namespace Teamwork_OOP.GameObjects.Characters
             }
         }
 
+        public void IncrementX(int value)
+        {
+            this.position.X += value;
+        }
+
+        public void IncrementY(int value)
+        {
+            this.position.Y += value;
+        }
 
         //TODO KPK FOR ALL CLASSES (CHECK DECLARATION ORDER, SHOULD BE =>
         //constants

@@ -12,6 +12,5 @@ namespace Teamwork_OOP.Factories
         {
             return new Tile(type, isSteppable, position);
         }
-        
     }
 }

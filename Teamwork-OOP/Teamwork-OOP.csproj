@@ -59,6 +59,7 @@
     <Compile Include="Interfaces\IMovable.cs" />
     <Compile Include="Interfaces\ITile.cs" />
     <Compile Include="Interfaces\ITileFactory.cs" />
+    <Compile Include="Interfaces\IAct.cs" />
     <Compile Include="States\State.cs" />
     <Compile Include="Interfaces\IAttack.cs" />
     <Compile Include="Interfaces\IAttackable.cs" />
