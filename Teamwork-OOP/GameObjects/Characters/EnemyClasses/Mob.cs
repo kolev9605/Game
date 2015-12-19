@@ -14,8 +14,8 @@ namespace Teamwork_OOP.GameObjects.Characters.EnemyClasses
         private const int DefaultDefensePoints = 1;
         private const int DefaultRange = 1;
 
-        public Mob(Texture2D texture, Vector2 possition) 
-            : base(texture, possition, DefaultHealthPoints, DefaultAttackPoints, DefaultDefensePoints, DefaultRange)
+        public Mob(Texture2D texture, Vector2 position) 
+            : base(texture, position, DefaultHealthPoints, DefaultAttackPoints, DefaultDefensePoints, DefaultRange)
         {
         }
     }

@@ -19,7 +19,7 @@ namespace Teamwork_OOP.GameObjects.Characters
         private bool isAlive;
 
         protected Character(
-            Vector2 possition,
+            Vector2 position,
             int healthPoints,
             int attackPoints,
             int defencePoints,
@@ -28,7 +28,7 @@ namespace Teamwork_OOP.GameObjects.Characters
             int textureHeight,
             int textureWidth)
         {
-            this.Position = possition;
+            this.Position = position;
             this.HealthPoints = healthPoints;
             this.AttackPoints = attackPoints;
             this.DefencePoints = defencePoints;
