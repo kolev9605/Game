@@ -152,9 +152,9 @@ namespace Teamwork_OOP.GameObjects.Characters
         {
             this.CharacterTexture = content.Load<Texture2D>(this.SpriteTexturePath);
             //TODO fix this switch so the code is reusable
-            switch (this.Type)
+            switch (this.SpriteTexturePath)
             {
-                case "warrior":
+                case "player_sprite":
                     this.AddAnimation(10, 113, 0, "runDown", 113, 112, new Vector2(0, 0));
                     this.AddAnimation(10, 113 * 2, 0, "runUp", 113, 112, new Vector2(0, 0));
                     this.AddAnimation(10, 113 * 3, 0, "runRight", 113, 112, new Vector2(0, 0));
@@ -164,37 +164,38 @@ namespace Teamwork_OOP.GameObjects.Characters
                     this.AddAnimation(3, 0, 12, "idleRight", 113, 112, new Vector2(0, 0));
                     this.AddAnimation(3, 113 * 2, 12, "idleLeft", 113, 112, new Vector2(0, 0));
                     break;
-                //case "monster-lizard":
-                //    AddAnimation(5, 56 * 1, 0, "runRight", 80, 56, new Vector2(0, 0));
-                //    AddAnimation(5, 56 * 2, 0, "runLeft", 80, 56, new Vector2(0, 0));
-                //    AddAnimation(5, 56 * 4, 0, "runDown", 80, 56, new Vector2(0, 0));
-                //    AddAnimation(5, 56 * 6, 0, "runUp", 80, 56, new Vector2(0, 0));
-                //    AddAnimation(5, 56 * 1, 0, "idleRight", 80, 56, new Vector2(0, 0));
-                //    AddAnimation(5, 56 * 3, 0, "idleLeft", 80, 56, new Vector2(0, 0));
-                //    AddAnimation(5, 56 * 5, 0, "idleDown", 80, 56, new Vector2(0, 0));
-                //    AddAnimation(5, 56 * 7, 0, "idleUp", 80, 56, new Vector2(0, 0));
-                //    break;
-                case "shadow":
-                    AddAnimation(3, 32 * 0, 3, "runRight", 32, 32, new Vector2(0, 0));
-                    AddAnimation(3, 32 * 0, 9, "runLeft", 32, 32, new Vector2(0, 0));
-                    AddAnimation(3, 32 * 0, 0, "runDown", 32, 32, new Vector2(0, 0));
-                    AddAnimation(3, 32 * 0, 6, "runUp", 32, 32, new Vector2(0, 0));
-                    AddAnimation(3, 32 * 0, 3, "idleRight", 32, 32, new Vector2(0, 0));
-                    AddAnimation(3, 32 * 0, 9, "idleLeft", 32, 32, new Vector2(0, 0));
-                    AddAnimation(3, 32 * 0, 0, "idleDown", 32, 32, new Vector2(0, 0));
-                    AddAnimation(3, 32 * 0, 6, "idleUp", 32, 32, new Vector2(0, 0));
-                    break;
-                case "skeleton":
-                    AddAnimation(3, 32 * 1, 3, "runRight", 32, 32, new Vector2(0, 0));
-                    AddAnimation(3, 32 * 1, 9, "runLeft", 32, 32, new Vector2(0, 0));
-                    AddAnimation(3, 32 * 1, 0, "runDown", 32, 32, new Vector2(0, 0));
-                    AddAnimation(3, 32 * 1, 6, "runUp", 32, 32, new Vector2(0, 0));
-                    AddAnimation(3, 32 * 1, 3, "idleRight", 32, 32, new Vector2(0, 0));
-                    AddAnimation(3, 32 * 1, 9, "idleLeft", 32, 32, new Vector2(0, 0));
-                    AddAnimation(3, 32 * 1, 0, "idleDown", 32, 32, new Vector2(0, 0));
-                    AddAnimation(3, 32 * 1, 6, "idleUp", 32, 32, new Vector2(0, 0));
+                case "monsters":
+                    int monsterFlag = GetMonsterFlag();
+                    AddAnimation(3, 32 * monsterFlag, 3, "runRight", 32, 32, new Vector2(0, 0));
+                    AddAnimation(3, 32 * monsterFlag, 9, "runLeft", 32, 32, new Vector2(0, 0));
+                    AddAnimation(3, 32 * monsterFlag, 0, "runDown", 32, 32, new Vector2(0, 0));
+                    AddAnimation(3, 32 * monsterFlag, 6, "runUp", 32, 32, new Vector2(0, 0));
+                    AddAnimation(3, 32 * monsterFlag, 3, "idleRight", 32, 32, new Vector2(0, 0));
+                    AddAnimation(3, 32 * monsterFlag, 9, "idleLeft", 32, 32, new Vector2(0, 0));
+                    AddAnimation(3, 32 * monsterFlag, 0, "idleDown", 32, 32, new Vector2(0, 0));
+                    AddAnimation(3, 32 * monsterFlag, 6, "idleUp", 32, 32, new Vector2(0, 0));
                     break;
             }
+        }
+
+        private int GetMonsterFlag()
+        {
+            int monsterModifier = 0;
+
+            switch (this.Type)
+            {
+                case "shadow": return monsterModifier = 0;
+                case "skeleton": return monsterModifier = 1;
+                case "goblin": return monsterModifier = 2;
+                case "gargoyle": return monsterModifier = 3;
+                case "genie": return monsterModifier = 4;
+                case "sorceress": return monsterModifier = 5;
+                case "death": return monsterModifier = 6;
+                case "sorceror": return monsterModifier = 7;
+                default: break;
+            }
+
+            return monsterModifier;
         }
 
         public void AddAnimation(int frames, int y, int startFrame, string name, int width, int height, Vector2 offset)

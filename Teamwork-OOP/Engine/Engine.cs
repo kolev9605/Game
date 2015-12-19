@@ -26,6 +26,9 @@ namespace Teamwork_OOP.Engine
         private IAct player;
         private IAct shadow;
         private IAct skeleton;
+        private IAct goblin;
+        private IAct gargoyle;
+        private IAct death;
         private Camera camera;
         private IMap map;
 
@@ -53,6 +56,9 @@ namespace Teamwork_OOP.Engine
             this.player = new Warrior(Vector2.Zero);
             this.shadow = new Shadow(new Vector2(200, 100));
             this.skeleton = new Skeleton(new Vector2(300, 100));
+            this.goblin = new Goblin(new Vector2(500, 200));
+            this.gargoyle = new Gargoyle(new Vector2(600, 10));
+            this.death = new Death(new Vector2(600, 200));
 
 
             this.map.Initialize(this.MapFactory, this.TileFactory);
@@ -69,6 +75,9 @@ namespace Teamwork_OOP.Engine
             this.player.LoadContent(this.Content);
             this.shadow.LoadContent(this.Content);
             this.skeleton.LoadContent(this.Content);
+            this.goblin.LoadContent(this.Content);
+            this.gargoyle.LoadContent(this.Content);
+            this.death.LoadContent(this.Content);
 
             TextureHandler.Load(this.Content);
         }
@@ -87,6 +96,9 @@ namespace Teamwork_OOP.Engine
             this.player.Update(gameTime);
             this.shadow.Update(gameTime);
             this.skeleton.Update(gameTime);
+            this.goblin.Update(gameTime);
+            this.gargoyle.Update(gameTime);
+            this.death.Update(gameTime);
             base.Update(gameTime);
         }
 
@@ -105,6 +117,9 @@ namespace Teamwork_OOP.Engine
             this.player.Draw(this.spriteBatch);
             this.shadow.Draw(this.spriteBatch);
             this.skeleton.Draw(this.spriteBatch);
+            this.goblin.Draw(this.spriteBatch);
+            this.gargoyle.Draw(this.spriteBatch);
+            this.death.Draw(this.spriteBatch);
 
             //end draw
             this.spriteBatch.End();
