@@ -44,9 +44,15 @@
     <Compile Include="GameObjects\Camera.cs" />
     <Compile Include="GameObjects\Characters\Character.cs" />
     <Compile Include="Engine\Engine.cs" />
+    <Compile Include="GameObjects\Characters\EnemyClasses\Death.cs" />
+    <Compile Include="GameObjects\Characters\EnemyClasses\Gargoyle.cs" />
+    <Compile Include="GameObjects\Characters\EnemyClasses\Genie.cs" />
+    <Compile Include="GameObjects\Characters\EnemyClasses\Goblin.cs" />
     <Compile Include="GameObjects\Characters\EnemyClasses\Lizard.cs" />
     <Compile Include="GameObjects\Characters\EnemyClasses\Shadow.cs" />
     <Compile Include="GameObjects\Characters\EnemyClasses\Skeleton.cs" />
+    <Compile Include="GameObjects\Characters\EnemyClasses\Sorceress.cs" />
+    <Compile Include="GameObjects\Characters\EnemyClasses\Sorceror.cs" />
     <Compile Include="GameObjects\Characters\PlayerClasses\Warrior.cs" />
     <Compile Include="GameObjects\Characters\Enemy.cs" />
     <Compile Include="GameObjects\Characters\Player.cs" />
