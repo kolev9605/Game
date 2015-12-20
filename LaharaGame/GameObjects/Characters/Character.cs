@@ -46,7 +46,7 @@
             this.StepSize = stepSize;
             this.TextureHeight = textureHeight;
             this.TextureWidth = textureWidth;
-            this.Bounds = new Rectangle((int)this.Position.X, (int)this.Position.Y, 40, 40);
+            this.Bounds = new Rectangle((int)this.Position.X, (int)this.Position.Y, this.TextureWidth, this.TextureHeight);
             this.collisionHandler = new NewCollisionHandler();
 
 
@@ -275,7 +275,7 @@
             }
             else
             {
-                this.IncrementX(-this.StepSize * 3);
+                this.IncrementX(-this.StepSize * 10);
             }
         }
         public void MoveLeft(IMovable dude, IMap map, MonsterData data)
@@ -286,7 +286,7 @@
             }
             else
             {
-                this.IncrementX(this.StepSize * 3);
+                this.IncrementX(this.StepSize * 10);
             }
         }
         public void MoveUp(IMovable dude, IMap map, MonsterData data)
@@ -297,7 +297,7 @@
             }
             else
             {
-                this.IncrementY(this.StepSize * 3);
+                this.IncrementY(this.StepSize * 10);
             }
         }
         public void MoveDown(IMovable dude, IMap map, MonsterData data)
@@ -308,7 +308,7 @@
             }
             else
             {
-                this.IncrementY(-this.StepSize * 3);
+                this.IncrementY(-this.StepSize * 10);
             }
         }
 

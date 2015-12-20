@@ -54,9 +54,9 @@
             //this.graphics.PreferredBackBufferWidth = (int) ScreenManager.Instance.Dimention.X;
             //this.graphics.PreferredBackBufferHeight = (int) ScreenManager.Instance.Dimention.Y;
             //this.graphics.ApplyChanges();
+          
 
-
-            this.player = new Warrior(Vector2.Zero);
+            this.player = new Warrior(new Vector2(10, 10));
 
             this.shadow = new Shadow(new Vector2(200, 100));
             this.monsters.AddEnemy(shadow as Character);

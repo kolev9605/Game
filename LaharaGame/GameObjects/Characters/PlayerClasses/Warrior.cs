@@ -16,7 +16,7 @@
         private const int DefaultAttackPoints = 1;
         private const int DefaultDefensePoints = 1;
         private const int DefaultRange = 1;
-        private const int default_stepSize = 2;
+        private const int default_stepSize = 1;
 
         public Warrior(Vector2 position)
             : base(
