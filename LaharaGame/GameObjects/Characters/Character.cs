@@ -10,6 +10,7 @@
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
     using Handlers;
+    using Data;
 
     public abstract class Character : GameObject, IAttack, IMovable, IAct
     {
@@ -236,7 +237,7 @@
         public string CurrentAnimation { get; set; }
         
 
-        public abstract void Act(KeyboardState state, IMap map);
+        public abstract void Act(KeyboardState state, IMap map, MonsterData data);
 
         public void Update(GameTime gameTime)
         {
@@ -264,11 +265,11 @@
 
         public abstract void Attack(KeyboardState state, IMap map);
 
-        public abstract void Move(KeyboardState state, IMap map);
+        public abstract void Move(KeyboardState state, IMap map, MonsterData data);
 
-        public void MoveRight(IMovable dude, IMap map)
+        public void MoveRight(IMovable dude, IMap map, MonsterData data)
         {
-            if (!this.collisionHandler.isCollision(this, map))
+            if (!this.collisionHandler.isCollision(this, map, data))
             {
                 this.IncrementX(this.StepSize);
             }
@@ -277,9 +278,9 @@
                 this.IncrementX(-this.StepSize * 3);
             }
         }
-        public void MoveLeft(IMovable dude, IMap map)
+        public void MoveLeft(IMovable dude, IMap map, MonsterData data)
         {
-            if (!this.collisionHandler.isCollision(this, map))
+            if (!this.collisionHandler.isCollision(this, map, data))
             {
                 this.IncrementX(-this.StepSize);
             }
@@ -288,9 +289,9 @@
                 this.IncrementX(this.StepSize * 3);
             }
         }
-        public void MoveUp(IMovable dude, IMap map)
+        public void MoveUp(IMovable dude, IMap map, MonsterData data)
         {
-            if (!this.collisionHandler.isCollision(this, map))
+            if (!this.collisionHandler.isCollision(this, map, data))
             {
                 this.IncrementY(-this.StepSize);
             }
@@ -299,9 +300,9 @@
                 this.IncrementY(this.StepSize * 3);
             }
         }
-        public void MoveDown(IMovable dude, IMap map)
+        public void MoveDown(IMovable dude, IMap map, MonsterData data)
         {
-            if (!this.collisionHandler.isCollision(this, map))
+            if (!this.collisionHandler.isCollision(this, map, data))
             {
                 this.IncrementY(this.StepSize);
             }

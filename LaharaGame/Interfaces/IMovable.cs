@@ -1,4 +1,6 @@
-﻿namespace LaharaGame.Interfaces
+﻿using LaharaGame.Data;
+
+namespace LaharaGame.Interfaces
 {
     public interface IMovable
     {
@@ -8,13 +10,13 @@
 
         int TextureHeight { get; set; }
 
-        void MoveRight(IMovable dude, IMap map);
+        void MoveRight(IMovable dude, IMap map, MonsterData data);
 
-        void MoveLeft(IMovable dude, IMap map);
+        void MoveLeft(IMovable dude, IMap map, MonsterData data);
 
-        void MoveUp(IMovable dude, IMap map);
+        void MoveUp(IMovable dude, IMap map, MonsterData data);
 
-        void MoveDown(IMovable dude, IMap map);
+        void MoveDown(IMovable dude, IMap map, MonsterData data);
 
 
         void IncrementX(int value);

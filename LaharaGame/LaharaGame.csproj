@@ -38,6 +38,7 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Data\MonsterData.cs" />
     <Compile Include="Extentions\Extentions.cs" />
     <Compile Include="Factories\MapFactory.cs" />
     <Compile Include="Factories\TileFactory.cs" />

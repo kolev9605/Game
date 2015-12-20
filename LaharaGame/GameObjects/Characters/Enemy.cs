@@ -4,6 +4,7 @@
     using System;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
+    using Data;
 
     class Enemy : Character
     {
@@ -34,12 +35,12 @@
             PlayAnimation("idleDown");
         }
         
-        public override void Act(KeyboardState state, IMap map)
+        public override void Act(KeyboardState state, IMap map, MonsterData data)
         {
             throw new NotImplementedException();
         }
 
-        public override void Move(KeyboardState state, IMap map)
+        public override void Move(KeyboardState state, IMap map, MonsterData data)
         {
             
         }

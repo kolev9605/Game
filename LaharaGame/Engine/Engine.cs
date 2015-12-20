@@ -10,6 +10,8 @@
     using InputHandler;
     using Interfaces;
     using Handlers;
+    using Data;
+    using GameObjects.Characters;
 
     public class Engine : Game
     {
@@ -19,6 +21,7 @@
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
         private NewCollisionHandler collisionHandler;
+        private MonsterData monsters;
 
         //extract the texture loading
         private IAct player;
@@ -34,6 +37,7 @@
         {
             this.graphics = new GraphicsDeviceManager(this);
             this.collisionHandler = new NewCollisionHandler();
+            this.monsters = new MonsterData();
             this.Content.RootDirectory = "Content";
             this.map = map;
             this.MapFactory = mapFactory;
@@ -53,11 +57,17 @@
 
 
             this.player = new Warrior(Vector2.Zero);
+
             this.shadow = new Shadow(new Vector2(200, 100));
+            this.monsters.AddEnemy(shadow as Character);
             this.skeleton = new Skeleton(new Vector2(300, 100));
+            this.monsters.AddEnemy(skeleton as Character);
             this.goblin = new Goblin(new Vector2(500, 200));
+            this.monsters.AddEnemy(goblin as Character);
             this.gargoyle = new Gargoyle(new Vector2(600, 10));
+            this.monsters.AddEnemy(gargoyle as Character);
             this.death = new Death(new Vector2(600, 200));
+            this.monsters.AddEnemy(death as Character);
 
 
             this.map.Initialize(this.MapFactory, this.TileFactory);
@@ -91,7 +101,7 @@
                 Exit();
 
             KeyboardState state = Keyboard.GetState();
-            this.player.Act(state,this.map);
+            this.player.Act(state,this.map,monsters);
             this.player.Update(gameTime);
             this.shadow.Update(gameTime);
             this.skeleton.Update(gameTime);
