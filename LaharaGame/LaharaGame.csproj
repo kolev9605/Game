@@ -61,7 +61,9 @@
     <Compile Include="GameObjects\Map\Tiles\Tile.cs" />
     <Compile Include="Handlers\CollisionHandler.cs" />
     <Compile Include="Handlers\InputHandler.cs" />
+    <Compile Include="Handlers\NewCollisionHandler.cs" />
     <Compile Include="Handlers\TextureHandler.cs" />
+    <Compile Include="Interfaces\ICharacter.cs" />
     <Compile Include="Interfaces\IMap.cs" />
     <Compile Include="Interfaces\IMapFactory.cs" />
     <Compile Include="Interfaces\IMovable.cs" />

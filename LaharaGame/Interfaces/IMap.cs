@@ -1,4 +1,6 @@
-﻿namespace LaharaGame.Interfaces
+﻿using System.Collections.Generic;
+
+namespace LaharaGame.Interfaces
 {
     public interface IMap
     {
@@ -11,5 +13,9 @@
         int TileHeight { get; }
 
         void Initialize(IMapFactory mapFactory, ITileFactory tileFactory);
+
+        void AddTile(ITile tile);
+
+        List<ITile> NewTiles { get;}
     }
 }

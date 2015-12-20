@@ -9,6 +9,7 @@
     using GameObjects.Characters.PlayerClasses;
     using InputHandler;
     using Interfaces;
+    using Handlers;
 
     public class Engine : Game
     {
@@ -17,7 +18,7 @@
 
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-
+        private NewCollisionHandler collisionHandler;
 
         //extract the texture loading
         private IAct player;
@@ -32,6 +33,7 @@
         public Engine(IMap map, IMapFactory mapFactory, ITileFactory tileFactory)
         {
             this.graphics = new GraphicsDeviceManager(this);
+            this.collisionHandler = new NewCollisionHandler();
             this.Content.RootDirectory = "Content";
             this.map = map;
             this.MapFactory = mapFactory;

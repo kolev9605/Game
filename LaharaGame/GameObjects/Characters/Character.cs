@@ -9,9 +9,12 @@
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
     using Microsoft.Xna.Framework.Input;
+    using Handlers;
 
     public abstract class Character : GameObject, IAttack, IMovable, IAct
     {
+        private NewCollisionHandler collisionHandler;
+
         private readonly uint id;
         private Texture2D characterTexture;
         private Vector2 position;
@@ -42,6 +45,8 @@
             this.StepSize = stepSize;
             this.TextureHeight = textureHeight;
             this.TextureWidth = textureWidth;
+            this.Bounds = new Rectangle((int)this.Position.X, (int)this.Position.Y, 40, 40);
+            this.collisionHandler = new NewCollisionHandler();
 
 
             this.FramesPerSecond = 5;
@@ -56,6 +61,8 @@
         {
             get { return this.id; }
         }
+
+        public Rectangle Bounds;
 
         public string SpriteTexturePath { get; set; }
 
@@ -259,67 +266,61 @@
 
         public abstract void Move(KeyboardState state, IMap map);
 
-        //if you want to check for all edges of the texture when moving 
-        //UNCOMMENT commented sections from left and right movement
-        //REMOVE ctrl + f => shouldRemoveThis
         public void MoveRight(IMovable dude, IMap map)
         {
-            if (!((int)this.Position.X + this.StepSize + this.TextureWidth >= map.Tiles.GetLength(1) * map.TileWidth))
+            if (!this.collisionHandler.isCollision(this, map))
             {
-                int tempCol1 = (int)(this.Position.X + this.StepSize + this.TextureWidth) / map.TileWidth;
-
-                //int tempRol1 = (int)(this.Position.Y) / Map.Map.TILE_DIMENTION;
-                int tempRol2 = (int)(this.Position.Y + this.TextureHeight) / map.TileHeight;
-                if (CollisionHandler.IsTileSteppable(tempRol2, tempCol1, map)/*&& CollisionHandler.IsTileSteppable(tempRol1, tempCol1,map)*/)
-                    this.IncrementX(this.StepSize);
+                this.IncrementX(this.StepSize);
+            }
+            else
+            {
+                this.IncrementX(-this.StepSize * 3);
             }
         }
         public void MoveLeft(IMovable dude, IMap map)
         {
-            if (!((int)this.Position.X - this.StepSize < 0))
+            if (!this.collisionHandler.isCollision(this, map))
             {
-                int tempCol1 = (int)(this.Position.X - this.StepSize) / map.TileWidth;
-
-                //int tempRol1 = (int)(this.Position.Y) / Map.Map.TILE_DIMENTION;
-                int tempRol2 = (int)(this.Position.Y + this.TextureHeight) / map.TileHeight;
-                if (CollisionHandler.IsTileSteppable(tempRol2, tempCol1, map)/*&& CollisionHandler.IsTileSteppable(tempRol1, tempCol1,map)*/ )
-                    this.IncrementX(-this.StepSize);
+                this.IncrementX(-this.StepSize);
+            }
+            else
+            {
+                this.IncrementX(this.StepSize * 3);
             }
         }
         public void MoveUp(IMovable dude, IMap map)
         {
-            if (!((int)this.Position.Y - this.StepSize < 0))
+            if (!this.collisionHandler.isCollision(this, map))
             {
-                int tempCol1 = (int)this.Position.X / map.TileWidth;
-                int tempCol2 = (int)(this.Position.X + this.TextureWidth) / map.TileWidth;
-
-                int tempRol1 = (int)(this.Position.Y + this.TextureHeight - this.StepSize) / map.TileHeight;
-                //^ shouldRemoveThis
-                if (CollisionHandler.IsTileSteppable(tempRol1, tempCol1, map) && CollisionHandler.IsTileSteppable(tempRol1, tempCol2, map))
-                    this.IncrementY(-this.StepSize);
+                this.IncrementY(-this.StepSize);
+            }
+            else
+            {
+                this.IncrementY(this.StepSize * 3);
             }
         }
         public void MoveDown(IMovable dude, IMap map)
         {
-            if (!((int)this.Position.Y + this.StepSize + this.TextureHeight >= map.Tiles.GetLength(0) * map.TileHeight))
+            if (!this.collisionHandler.isCollision(this, map))
             {
-                int tempCol1 = (int)this.Position.X / map.TileWidth;
-                int tempCol2 = (int)(this.Position.X + this.TextureWidth) / map.TileWidth;
-
-                int tempRol1 = (int)(this.Position.Y + this.StepSize + this.TextureHeight) / map.TileHeight;
-                if (CollisionHandler.IsTileSteppable(tempRol1, tempCol1, map) && CollisionHandler.IsTileSteppable(tempRol1, tempCol2, map))
-                    this.IncrementY(this.StepSize);
+                this.IncrementY(this.StepSize);
+            }
+            else
+            {
+                this.IncrementY(-this.StepSize * 3);
             }
         }
 
         public void IncrementX(int value)
         {
             this.position.X += value;
+            this.Bounds.X += value;
         }
 
         public void IncrementY(int value)
         {
             this.position.Y += value;
+            this.Bounds.Y += value;
         }
 
         //TODO KPK FOR ALL CLASSES (CHECK DECLARATION ORDER, SHOULD BE =>

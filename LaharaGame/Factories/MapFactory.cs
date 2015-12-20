@@ -6,9 +6,9 @@
 
     public class MapFactory : IMapFactory
     {
-        public void Initialize(IMap map,string src, ITileFactory tileFactory)
+        public void Initialize(IMap map,string source, ITileFactory tileFactory)
         {
-            StreamReader reader = new StreamReader(src);
+            StreamReader reader = new StreamReader(source);
             using (reader)
             {
                 string[] line = reader.ReadLine().Split();
@@ -16,6 +16,7 @@
                 int cols = int.Parse(line[1]);
 
                 map.Tiles = new ITile[rows, cols];
+
 
                 string getLine = reader.ReadLine();
                 int currentLine = 0;
@@ -26,10 +27,14 @@
                         switch (getLine[i])
                         {
                             case 'G':
-                                map.Tiles[currentLine, i] = tileFactory.Make("grass_tile", true, new Vector2(i * map.TileWidth, currentLine * map.TileHeight));
+                                var newTile = tileFactory.Make("grass_tile", true, new Vector2(i * map.TileWidth, currentLine * map.TileHeight));
+                                map.Tiles[currentLine, i] = newTile;
+                                map.AddTile(newTile);
                                 continue;
                             case 'R':
-                                map.Tiles[currentLine, i] = tileFactory.Make("rock_tile", false, new Vector2(i * map.TileWidth, currentLine * map.TileHeight));
+                                var newTile2 = tileFactory.Make("rock_tile", false, new Vector2(i * map.TileWidth, currentLine * map.TileHeight));
+                                map.Tiles[currentLine, i] = newTile2;
+                                map.AddTile(newTile2);
                                 continue;
                         }
                     }

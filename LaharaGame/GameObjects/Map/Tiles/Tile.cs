@@ -14,8 +14,11 @@
             IsSteppable = isSteppable;
             this.Type = type;
             this.Position = position;
+            this.Bounds = new Rectangle((int)position.X, (int)position.Y, 50, 50);
             //TODO position could be derived from tile positon in array 
         }
+
+        public Rectangle Bounds { get; set; }
 
         public Vector2 Position { get; set; }
 

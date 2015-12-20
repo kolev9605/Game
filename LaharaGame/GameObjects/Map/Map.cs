@@ -1,6 +1,7 @@
 ﻿namespace LaharaGame.GameObjects.Map
 {
     using Interfaces;
+    using System.Collections.Generic;
 
     public class Map : IMap
     {
@@ -14,6 +15,15 @@
         public string Src { get; set; }
 
         public ITile[,] Tiles { get; set; }
+
+        private List<ITile> newTiles = new List<ITile>();
+
+        public List<ITile> NewTiles { get { return this.newTiles; } }
+
+        public void AddTile(ITile tile)
+        {
+            newTiles.Add(tile);
+        }
 
         public int TileWidth { get; private set; }
 

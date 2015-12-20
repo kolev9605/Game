@@ -6,6 +6,8 @@ namespace LaharaGame.Interfaces
     {
         Vector2 Position { get; set; }
 
+        Rectangle Bounds { get; set; }
+
         bool IsSteppable { get; set; }
 
         string Type { get; set; }
