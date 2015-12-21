@@ -56,8 +56,8 @@ namespace LaharaGame.GameObjects.Characters
             {
                 foreach (var enemy in characters)
                 {
-                    float deltaX = enemy.Position.X+22 - this.Position.X+16;
-                    float deltaY = enemy.Position.Y+22 - this.Position.Y+16;
+                    float deltaX = Math.Abs((enemy.Position.X+22) - (this.Position.X+16));
+                    float deltaY = Math.Abs((enemy.Position.Y+22) - (this.Position.Y+16));
                     float distanceFromEnemy = (float)Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
                     if (distanceFromEnemy < 50)
                     {
