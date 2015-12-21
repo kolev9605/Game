@@ -15,7 +15,7 @@ namespace LaharaGame.Handlers
         private int windowHeight;
         private int windowWidth;
 
-        public bool isCollision(Character character, IMap map, MonsterData monsters)
+        public bool isCollision(Character character, IMap map, List<Character> characters)
         {
             var screenHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             var screenWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
@@ -28,7 +28,7 @@ namespace LaharaGame.Handlers
                 }
             }
 
-            foreach (var monster in monsters.enemies)
+            foreach (var monster in characters)
             {
                 if (character.Bounds.Intersects(monster.Bounds))
                 {

@@ -1,4 +1,5 @@
-﻿using LaharaGame.Data;
+﻿using System.Collections.Generic;
+using LaharaGame.GameObjects.Characters;
 
 namespace LaharaGame.Interfaces
 {
@@ -10,13 +11,13 @@ namespace LaharaGame.Interfaces
 
         int TextureHeight { get; set; }
 
-        void MoveRight(IMovable dude, IMap map, MonsterData data);
+        void MoveRight(IMovable dude, IMap map, List<Character> characters);
 
-        void MoveLeft(IMovable dude, IMap map, MonsterData data);
+        void MoveLeft(IMovable dude, IMap map, List<Character> characters);
 
-        void MoveUp(IMovable dude, IMap map, MonsterData data);
+        void MoveUp(IMovable dude, IMap map, List<Character> characters);
 
-        void MoveDown(IMovable dude, IMap map, MonsterData data);
+        void MoveDown(IMovable dude, IMap map, List<Character> characters);
 
 
         void IncrementX(int value);

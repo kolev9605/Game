@@ -1,6 +1,9 @@
-﻿namespace LaharaGame.Interfaces
+﻿using System.Collections.Generic;
+using LaharaGame.GameObjects.Characters;
+
+namespace LaharaGame.Interfaces
 {
-    using Data;
+    using GameObjects;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Content;
     using Microsoft.Xna.Framework.Graphics;
@@ -8,7 +11,7 @@
 
     public interface IAct
     {
-        void Act(KeyboardState state, IMap map, MonsterData data);
+        void Act(KeyboardState state, IMap map, List<Character> characters);
 
         void Update(GameTime gameTime);
 

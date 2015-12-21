@@ -22,6 +22,7 @@
         private SpriteBatch spriteBatch;
         private NewCollisionHandler collisionHandler;
         private MonsterData monsters;
+        private PlayerData players;
 
         //extract the texture loading
         private IAct player;
@@ -39,6 +40,7 @@
             this.graphics = new GraphicsDeviceManager(this);
             this.collisionHandler = new NewCollisionHandler();
             this.monsters = new MonsterData();
+            this.players = new PlayerData();
             this.Content.RootDirectory = "Content";
             this.map = map;
             this.MapFactory = mapFactory;
@@ -58,6 +60,7 @@
           
 
             this.player = new Warrior(new Vector2(10, 10));
+            this.players.AddEnemy(player as Character);
 
             this.shadow = new Shadow(new Vector2(260, 10));
             this.monsters.AddEnemy(shadow as Character);
@@ -105,7 +108,7 @@
                 Exit();
 
             KeyboardState state = Keyboard.GetState();
-            this.player.Act(state,this.map,monsters);
+            this.player.Act(state,this.map,monsters.enemies);
             this.player.Update(gameTime);
             this.shadow.Update(gameTime);
             this.skeleton.Update(gameTime);

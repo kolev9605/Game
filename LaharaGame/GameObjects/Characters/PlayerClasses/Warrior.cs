@@ -3,6 +3,7 @@
     using Interfaces;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
+    using Enums;
 
     class Warrior : Player
     {
@@ -17,6 +18,7 @@
         private const int DefaultDefensePoints = 1;
         private const int DefaultRange = 1;
         private const int default_stepSize = 1;
+        private const AttackState defaultAttackState = AttackState.notactivated;
 
         public Warrior(Vector2 position)
             : base(
@@ -29,17 +31,9 @@
                   DefaultRange, 
                   default_stepSize, 
                   textureHeight, 
-                  textureWidth)
+                  textureWidth,
+                  defaultAttackState)
         {
         }
-
-        public override void Attack(KeyboardState state, IMap map)
-        {
-            if (state.IsKeyDown(Keys.Space))
-            {
-                this.IncrementX(1);
-            }
-        }
-
     }
 }

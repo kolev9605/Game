@@ -11,6 +11,7 @@
     using Microsoft.Xna.Framework.Input;
     using Handlers;
     using Data;
+    using Enums;
 
     public abstract class Character : GameObject, IAttack, IMovable, IAct
     {
@@ -23,6 +24,7 @@
         private int attackPoints;
         private int defencePoints;
         private int range;
+        private AttackState attackState;
 
         protected Character(
             string spriteTexturePath,
@@ -34,7 +36,8 @@
             int range,
             int stepSize,
             int textureHeight,
-            int textureWidth)
+            int textureWidth,
+            AttackState attackState = AttackState.notactivated)
         {
             this.SpriteTexturePath = spriteTexturePath;
             this.Type = type;
@@ -48,6 +51,7 @@
             this.TextureWidth = textureWidth;
             this.Bounds = new Rectangle((int)this.Position.X, (int)this.Position.Y, this.TextureWidth, this.TextureHeight);
             this.collisionHandler = new NewCollisionHandler();
+            this.AttackState = attackState;
 
 
             this.FramesPerSecond = 5;
@@ -62,6 +66,8 @@
         {
             get { return this.id; }
         }
+
+        public Rectangle HealthBar { get; set; }
 
         public Rectangle Bounds;
 
@@ -119,6 +125,17 @@
                 this.defencePoints = value;
             }
         }
+        public AttackState AttackState
+        {
+            get
+            {
+                return this.attackState;
+            }
+            set
+            {
+                this.attackState = value;
+            }
+        }
 
         public int Range
         {
@@ -138,7 +155,7 @@
         public bool IsMoving { get; set; }
 
         public bool IsAlive { get; set; }
-        
+
 
         public Dictionary<string, Rectangle[]> Animations { get; set; }
 
@@ -209,12 +226,12 @@
         public void AddAnimation(int frames, int y, int startFrame, string name, int width, int height, Vector2 offset)
         {
             Rectangle[] currAnimation = new Rectangle[frames];
-            
+
             for (int i = 0; i < frames; i++)
             {
                 currAnimation[i] = new Rectangle((i + startFrame) * width, y, width, height);
             }
-            
+
             if (!this.Animations.ContainsKey(name))
             {
                 this.Animations.Add(name, currAnimation);
@@ -235,41 +252,49 @@
         }
 
         public string CurrentAnimation { get; set; }
-        
 
-        public abstract void Act(KeyboardState state, IMap map, MonsterData data);
+
+        public abstract void Act(KeyboardState state, IMap map, List<Character> characters);
 
         public void Update(GameTime gameTime)
         {
             //calculating the time to update the animation
-            this.TimeElapsed += gameTime.ElapsedGameTime.TotalSeconds;
-            if (this.TimeElapsed > this.TimeToUpdate)
+            if (healthPoints > 0)
             {
-                this.TimeElapsed -= this.TimeToUpdate;
+                this.TimeElapsed += gameTime.ElapsedGameTime.TotalSeconds;
+                if (this.TimeElapsed > this.TimeToUpdate)
+                {
+                    this.TimeElapsed -= this.TimeToUpdate;
 
-                if (this.FrameIndex < this.Animations[this.CurrentAnimation].Length - 1)
-                {
-                    this.FrameIndex += 1;
-                }
-                else
-                {
-                    this.FrameIndex = 0;
+                    if (this.FrameIndex < this.Animations[this.CurrentAnimation].Length - 1)
+                    {
+                        this.FrameIndex += 1;
+                    }
+                    else
+                    {
+                        this.FrameIndex = 0;
+                    }
                 }
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(this.characterTexture, this.Position, this.Animations[this.CurrentAnimation][this.FrameIndex], Color.White);
+            if (healthPoints > 0)
+            {
+                spriteBatch.Draw(this.characterTexture, this.Position,
+                    this.Animations[this.CurrentAnimation][this.FrameIndex], Color.White);
+                //TODO spriteBatch.Draw(the both rectangles)
+            }
         }
 
-        public abstract void Attack(KeyboardState state, IMap map);
+        public abstract void Attack(KeyboardState state, IMap map, List<Character> characters);
 
-        public abstract void Move(KeyboardState state, IMap map, MonsterData data);
+        public abstract void Move(KeyboardState state, IMap map, List<Character> characters);
 
-        public void MoveRight(IMovable dude, IMap map, MonsterData data)
+        public void MoveRight(IMovable dude, IMap map, List<Character> characters)
         {
-            if (!this.collisionHandler.isCollision(this, map, data))
+            if (!this.collisionHandler.isCollision(this, map, characters))
             {
                 this.IncrementX(this.StepSize);
             }
@@ -278,9 +303,9 @@
                 this.IncrementX(-this.StepSize * 3);
             }
         }
-        public void MoveLeft(IMovable dude, IMap map, MonsterData data)
+        public void MoveLeft(IMovable dude, IMap map, List<Character> characters)
         {
-            if (!this.collisionHandler.isCollision(this, map, data))
+            if (!this.collisionHandler.isCollision(this, map, characters))
             {
                 this.IncrementX(-this.StepSize);
             }
@@ -289,9 +314,9 @@
                 this.IncrementX(this.StepSize * 3);
             }
         }
-        public void MoveUp(IMovable dude, IMap map, MonsterData data)
+        public void MoveUp(IMovable dude, IMap map, List<Character> characters)
         {
-            if (!this.collisionHandler.isCollision(this, map, data))
+            if (!this.collisionHandler.isCollision(this, map, characters))
             {
                 this.IncrementY(-this.StepSize);
             }
@@ -300,9 +325,9 @@
                 this.IncrementY(this.StepSize * 3);
             }
         }
-        public void MoveDown(IMovable dude, IMap map, MonsterData data)
+        public void MoveDown(IMovable dude, IMap map, List<Character> characters)
         {
-            if (!this.collisionHandler.isCollision(this, map, data))
+            if (!this.collisionHandler.isCollision(this, map, characters))
             {
                 this.IncrementY(this.StepSize);
             }
@@ -323,7 +348,6 @@
             this.position.Y += value;
             this.Bounds.Y += value;
         }
-
         //TODO KPK FOR ALL CLASSES (CHECK DECLARATION ORDER, SHOULD BE =>
         //constants
         //fields

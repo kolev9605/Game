@@ -1,9 +1,13 @@
-﻿namespace LaharaGame.GameObjects.Characters
+﻿using System;
+using System.Collections.Generic;
+
+namespace LaharaGame.GameObjects.Characters
 {
     using Interfaces;
     using Data;
     using Microsoft.Xna.Framework;
     using Microsoft.Xna.Framework.Input;
+    using Enums;
 
     public abstract class Player : Character
     {
@@ -17,7 +21,8 @@
             int range,
             int stepSize,
             int textureHeight,
-            int textureWidth)
+            int textureWidth,
+            AttackState attackState = AttackState.notactivated)
             : base(
                   spriteTexturePath,
                   type,
@@ -28,41 +33,42 @@
                   range, 
                   stepSize, 
                   textureHeight, 
-                  textureWidth)
+                  textureWidth,
+                  attackState)
         {
             
         }
 
-        public override void Act(KeyboardState state, IMap map, MonsterData data)
+        public override void Act(KeyboardState state, IMap map, List<Character> characters)
         {
-            this.Move(state,map, data);
-            this.Attack(state,map);
+            this.Move(state,map, characters);
+            this.Attack(state,map, characters);
         }
 
-        public override void Move(KeyboardState state, IMap map, MonsterData data)
+        public override void Move(KeyboardState state, IMap map, List<Character> characters)
         {
             if (state.IsKeyDown(Keys.Right))
             {
-                base.MoveRight(this, map, data);
+                base.MoveRight(this, map, characters);
                 this.IsMoving = true;
                 this.PlayAnimation("runRight");
             }
 
             if (state.IsKeyDown(Keys.Left))
             {
-                base.MoveLeft(this, map, data);
+                base.MoveLeft(this, map, characters);
                 this.IsMoving = true;
                 this.PlayAnimation("runLeft");
             }
             if (state.IsKeyDown(Keys.Up))
             {
-                base.MoveUp(this, map, data);
+                base.MoveUp(this, map, characters);
                 this.IsMoving = true;
                 this.PlayAnimation("runUp");
             }
             if (state.IsKeyDown(Keys.Down))
             {
-                base.MoveDown(this, map, data);
+                base.MoveDown(this, map, characters);
                 this.IsMoving = true;
                 this.PlayAnimation("runDown");
             }
@@ -91,6 +97,24 @@
 
             //at the end of every update setting isMoving to false
             this.IsMoving = false;
+        }
+
+        public override void Attack(KeyboardState state, IMap map, List<Character> characters)//MonsterDataDict data
+        {
+            if (state.IsKeyDown(Keys.Space))
+            {
+                foreach (var enemy in characters)
+                {
+                    float deltaX = enemy.Position.X - this.Position.X;
+                    float deltaY = enemy.Position.Y - this.Position.Y;
+                    float distanceFromEnemy = (float)Math.Sqrt(deltaX*deltaX + deltaY*deltaX);
+                    if (distanceFromEnemy<20)
+                    {
+                        enemy.HealthPoints = enemy.HealthPoints - this.AttackPoints;
+                        enemy.AttackState = AttackState.Activated;
+                    }
+                }
+            }
         }
 
 
