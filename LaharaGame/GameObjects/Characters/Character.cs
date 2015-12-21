@@ -19,6 +19,8 @@
 
         private readonly uint id;
         private Texture2D characterTexture;
+        private Texture2D healthBarRTexture;
+        private Texture2D healthBarGTexture;
         private Vector2 position;
         private int healthPoints;
         private int attackPoints;
@@ -85,6 +87,30 @@
                     throw new FileNotFoundException();
                 }
                 this.characterTexture = value;
+            }
+        }
+        public Texture2D HealthBarRTexture
+        {
+            get { return this.healthBarRTexture; }
+            set
+            {
+                if (value == null)
+                {
+                    throw new FileNotFoundException();
+                }
+                this.healthBarRTexture = value;
+            }
+        }
+        public Texture2D HealthBarGTexture
+        {
+            get { return this.healthBarGTexture; }
+            set
+            {
+                if (value == null)
+                {
+                    throw new FileNotFoundException();
+                }
+                this.healthBarGTexture = value;
             }
         }
 
@@ -172,6 +198,8 @@
         public void LoadContent(ContentManager content)
         {
             this.CharacterTexture = content.Load<Texture2D>(this.SpriteTexturePath);
+            this.HealthBarGTexture = content.Load<Texture2D>("HealthBarG");
+            this.HealthBarRTexture = content.Load<Texture2D>("HealthBarR");
             //TODO fix this switch so the code is reusable
             switch (this.SpriteTexturePath)
             {
@@ -278,9 +306,11 @@
         {
             if (healthPoints > 0)
             {
-                spriteBatch.Draw(this.characterTexture, this.Position,
-                    this.Animations[this.CurrentAnimation][this.FrameIndex], Color.White);
-                //TODO spriteBatch.Draw(the both rectangles)
+                spriteBatch.Draw(this.characterTexture, this.Position, this.Animations[this.CurrentAnimation][this.FrameIndex], Color.White);
+                Rectangle HealthBarR = new Rectangle((int)this.Position.X, (int)this.Position.Y-9, 45, 9);
+                Rectangle HealthBarG = new Rectangle((int)this.Position.X, (int)this.Position.Y-9, this.HealthPoints*45/100, 9);
+                spriteBatch.Draw(HealthBarRTexture, HealthBarR, Color.White);
+                spriteBatch.Draw(HealthBarGTexture, HealthBarG, Color.White);
             }
         }
 
