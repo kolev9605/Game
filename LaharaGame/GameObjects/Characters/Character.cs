@@ -275,7 +275,7 @@
             }
             else
             {
-                this.IncrementX(-this.StepSize * 10);
+                this.IncrementX(-this.StepSize * 3);
             }
         }
         public void MoveLeft(IMovable dude, IMap map, MonsterData data)
@@ -286,7 +286,7 @@
             }
             else
             {
-                this.IncrementX(this.StepSize * 10);
+                this.IncrementX(this.StepSize * 3);
             }
         }
         public void MoveUp(IMovable dude, IMap map, MonsterData data)
@@ -297,7 +297,7 @@
             }
             else
             {
-                this.IncrementY(this.StepSize * 10);
+                this.IncrementY(this.StepSize * 3);
             }
         }
         public void MoveDown(IMovable dude, IMap map, MonsterData data)
@@ -308,7 +308,7 @@
             }
             else
             {
-                this.IncrementY(-this.StepSize * 10);
+                this.IncrementY(-this.StepSize * 3);
             }
         }
 
