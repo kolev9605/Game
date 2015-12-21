@@ -41,8 +41,11 @@ namespace LaharaGame.GameObjects.Characters
 
         public override void Act(KeyboardState state, IMap map, List<Character> characters)
         {
-            this.Move(state,map, characters);
-            this.Attack(state,map, characters);
+            if (this.HealthPoints > 0)
+            {
+                this.Move(state, map, characters);
+                this.Attack(state, map, characters);
+            }            
         }
 
         public override void Move(KeyboardState state, IMap map, List<Character> characters)
@@ -110,13 +113,16 @@ namespace LaharaGame.GameObjects.Characters
                     float distanceFromEnemy = (float)Math.Sqrt(deltaX*deltaX + deltaY*deltaY);
                     if (distanceFromEnemy<50)
                     {
-                        enemy.HealthPoints = enemy.HealthPoints - this.AttackPoints;
+                        int damage = 0;
+                        if (this.AttackPoints > enemy.DefencePoints)
+                        {
+                            damage = this.AttackPoints - enemy.DefencePoints;
+                        }
+                        enemy.HealthPoints = enemy.HealthPoints - damage;
                         enemy.AttackState = AttackState.Activated;
                     }
                 }
             }
         }
-
-
     }
 }

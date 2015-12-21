@@ -111,11 +111,17 @@
             KeyboardState state = Keyboard.GetState();
             this.player.Act(state,this.map,monsters.enemies);
             this.player.Update(gameTime);
+            this.shadow.Act(state, this.map, players.players);
             this.shadow.Update(gameTime);
+            this.skeleton.Act(state, this.map, players.players);
             this.skeleton.Update(gameTime);
+            this.goblin.Act(state, this.map, players.players);
             this.goblin.Update(gameTime);
+            this.gargoyle.Act(state, this.map, players.players);
             this.gargoyle.Update(gameTime);
+            this.death.Act(state, this.map, players.players);
             this.death.Update(gameTime);
+            this.sorceror.Act(state, this.map, players.players);
             this.sorceror.Update(gameTime);
             this.monsters.enemies.RemoveAll(e => e.HealthPoints <= 0);
             base.Update(gameTime);

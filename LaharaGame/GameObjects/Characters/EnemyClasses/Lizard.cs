@@ -10,7 +10,7 @@
         private const int textureWidth = 80;
         private const int textureHeight = 56;
 
-        private const int DefaultHealthPoints = 1;
+        private const int DefaultHealthPoints = 100;
         private const int DefaultAttackPoints = 1;
         private const int DefaultDefensePoints = 1;
         private const int DefaultRange = 1;
