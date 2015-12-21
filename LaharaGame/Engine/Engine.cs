@@ -12,6 +12,7 @@
     using Handlers;
     using Data;
     using GameObjects.Characters;
+    using System.Linq;
 
     public class Engine : Game
     {
@@ -116,6 +117,7 @@
             this.gargoyle.Update(gameTime);
             this.death.Update(gameTime);
             this.sorceror.Update(gameTime);
+            this.monsters.enemies.RemoveAll(e => e.HealthPoints <= 0);
             base.Update(gameTime);
         }
 

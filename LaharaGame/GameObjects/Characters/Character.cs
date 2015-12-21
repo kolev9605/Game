@@ -103,10 +103,6 @@
             get { return this.healthPoints; }
             set
             {
-                if (value < 0)
-                {
-                    throw new ArgumentOutOfRangeException();
-                }
                 this.healthPoints = value;
             }
         }

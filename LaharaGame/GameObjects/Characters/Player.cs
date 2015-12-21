@@ -105,10 +105,10 @@ namespace LaharaGame.GameObjects.Characters
             {
                 foreach (var enemy in characters)
                 {
-                    float deltaX = enemy.Position.X - this.Position.X;
-                    float deltaY = enemy.Position.Y - this.Position.Y;
-                    float distanceFromEnemy = (float)Math.Sqrt(deltaX*deltaX + deltaY*deltaX);
-                    if (distanceFromEnemy<20)
+                    float deltaX = Math.Abs(enemy.Position.X+16 - this.Position.X+22);
+                    float deltaY = Math.Abs(enemy.Position.Y+16 - this.Position.Y+22);
+                    float distanceFromEnemy = (float)Math.Sqrt(deltaX*deltaX + deltaY*deltaY);
+                    if (distanceFromEnemy<50)
                     {
                         enemy.HealthPoints = enemy.HealthPoints - this.AttackPoints;
                         enemy.AttackState = AttackState.Activated;
