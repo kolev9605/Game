@@ -26,6 +26,7 @@
         private int attackPoints;
         private int defencePoints;
         private int range;
+        private int initialHealthPoints;
         private AttackState attackState;
 
         protected Character(
@@ -45,6 +46,7 @@
             this.Type = type;
             this.Position = position;
             this.HealthPoints = healthPoints;
+            this.initialHealthPoints = healthPoints;
             this.AttackPoints = attackPoints;
             this.DefencePoints = defencePoints;
             this.Range = range;
@@ -63,7 +65,6 @@
             PlayAnimation("idleDown");
         }
 
-        //TODO: More validation
         public uint Id
         {
             get { return this.id; }
@@ -89,6 +90,7 @@
                 this.characterTexture = value;
             }
         }
+
         public Texture2D HealthBarRTexture
         {
             get { return this.healthBarRTexture; }
@@ -101,6 +103,7 @@
                 this.healthBarRTexture = value;
             }
         }
+
         public Texture2D HealthBarGTexture
         {
             get { return this.healthBarGTexture; }
@@ -133,6 +136,18 @@
             }
         }
 
+        public int InitialHealthPoints
+        {
+            get
+            {
+                return this.initialHealthPoints;
+            }
+            set
+            {
+                this.initialHealthPoints = value;
+            }
+        }
+
         public int AttackPoints { get; set; }
 
         public int DefencePoints
@@ -147,6 +162,7 @@
                 this.defencePoints = value;
             }
         }
+
         public AttackState AttackState
         {
             get
@@ -306,9 +322,11 @@
         {
             if (healthPoints > 0)
             {
+                float greenBarWidth = ((float)this.HealthPoints / this.initialHealthPoints) * this.TextureWidth;
+
                 spriteBatch.Draw(this.characterTexture, this.Position, this.Animations[this.CurrentAnimation][this.FrameIndex], Color.White);
-                Rectangle HealthBarR = new Rectangle((int)this.Position.X, (int)this.Position.Y-9, 45, 9);
-                Rectangle HealthBarG = new Rectangle((int)this.Position.X, (int)this.Position.Y-9, this.HealthPoints*45/100, 9);
+                Rectangle HealthBarR = new Rectangle((int)this.Position.X, (int)this.Position.Y-9, this.TextureWidth, 3);
+                Rectangle HealthBarG = new Rectangle((int)this.Position.X, (int)this.Position.Y-9, (int)greenBarWidth, 3);
                 spriteBatch.Draw(HealthBarRTexture, HealthBarR, Color.White);
                 spriteBatch.Draw(HealthBarGTexture, HealthBarG, Color.White);
             }
@@ -329,6 +347,7 @@
                 this.IncrementX(-this.StepSize * 3);
             }
         }
+
         public void MoveLeft(IMovable dude, IMap map, List<Character> characters)
         {
             if (!this.collisionHandler.isCollision(this, map, characters))
@@ -340,6 +359,7 @@
                 this.IncrementX(this.StepSize * 3);
             }
         }
+
         public void MoveUp(IMovable dude, IMap map, List<Character> characters)
         {
             if (!this.collisionHandler.isCollision(this, map, characters))
@@ -351,6 +371,7 @@
                 this.IncrementY(this.StepSize * 3);
             }
         }
+
         public void MoveDown(IMovable dude, IMap map, List<Character> characters)
         {
             if (!this.collisionHandler.isCollision(this, map, characters))
@@ -374,13 +395,5 @@
             this.position.Y += value;
             this.Bounds.Y += value;
         }
-        //TODO KPK FOR ALL CLASSES (CHECK DECLARATION ORDER, SHOULD BE =>
-        //constants
-        //fields
-        //constructors
-        //properties
-        //methods
-        //TODO order for all of the above =>
-        //public / protected / internal / private /
     }
 }

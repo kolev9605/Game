@@ -13,9 +13,9 @@
         private const int textureWidth = 45;
         private const int textureHeight = 45;
         
-        private const int DefaultHealthPoints = 1;
+        private const int DefaultHealthPoints = 1000;
         private const int DefaultAttackPoints = 1;
-        private const int DefaultDefensePoints = 1;
+        private const int DefaultDefensePoints = 2;
         private const int DefaultRange = 1;
         private const int default_stepSize = 1;
         private const AttackState defaultAttackState = AttackState.notactivated;
