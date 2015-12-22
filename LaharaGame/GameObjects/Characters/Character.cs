@@ -338,49 +338,49 @@
 
         public void MoveRight(IMovable dude, IMap map, List<Character> characters)
         {
-            if (!this.collisionHandler.isCollision(this, map, characters))
+            if (!((int)this.Position.X + this.StepSize + this.TextureWidth >= map.Tiles.GetLength(1) * map.TileWidth))
             {
-                this.IncrementX(this.StepSize);
-            }
-            else
-            {
-                this.IncrementX(-this.StepSize * 3);
+                int tempCol1 = (int)(this.Position.X + this.StepSize + this.TextureWidth) / map.TileWidth;
+                int tempRol1 = (int)(this.Position.Y) / map.TileWidth;
+                int tempRol2 = (int)(this.Position.Y + this.TextureHeight) / map.TileHeight;
+                if (CollisionHandler.IsTileSteppable(tempRol2, tempCol1, map) && CollisionHandler.IsTileSteppable(tempRol1, tempCol1,map))
+                    this.IncrementX(this.StepSize);
             }
         }
 
         public void MoveLeft(IMovable dude, IMap map, List<Character> characters)
         {
-            if (!this.collisionHandler.isCollision(this, map, characters))
+            if (!((int)this.Position.X - this.StepSize < 0))
             {
-                this.IncrementX(-this.StepSize);
-            }
-            else
-            {
-                this.IncrementX(this.StepSize * 3);
+                int tempCol1 = (int)(this.Position.X - this.StepSize) / map.TileWidth;
+                int tempRol1 = (int)(this.Position.Y) / map.TileWidth;
+                int tempRol2 = (int)(this.Position.Y + this.TextureHeight) / map.TileHeight;
+                if (CollisionHandler.IsTileSteppable(tempRol2, tempCol1, map) && CollisionHandler.IsTileSteppable(tempRol1, tempCol1,map))
+                    this.IncrementX(-this.StepSize);
             }
         }
 
         public void MoveUp(IMovable dude, IMap map, List<Character> characters)
         {
-            if (!this.collisionHandler.isCollision(this, map, characters))
+            if (!((int)this.Position.Y - this.StepSize < 0))
             {
-                this.IncrementY(-this.StepSize);
-            }
-            else
-            {
-                this.IncrementY(this.StepSize * 3);
+                int tempCol1 = (int)this.Position.X / map.TileWidth;
+                int tempCol2 = (int)(this.Position.X + this.TextureWidth) / map.TileWidth;
+                int tempRol1 = (int)(this.Position.Y + this.TextureHeight - this.StepSize) / map.TileHeight;
+                if (CollisionHandler.IsTileSteppable(tempRol1, tempCol1, map) && CollisionHandler.IsTileSteppable(tempRol1, tempCol2, map))
+                    this.IncrementY(-this.StepSize);
             }
         }
 
         public void MoveDown(IMovable dude, IMap map, List<Character> characters)
         {
-            if (!this.collisionHandler.isCollision(this, map, characters))
+            if (!((int)this.Position.Y + this.StepSize + this.TextureHeight >= map.Tiles.GetLength(0) * map.TileHeight))
             {
-                this.IncrementY(this.StepSize);
-            }
-            else
-            {
-                this.IncrementY(-this.StepSize * 3);
+                int tempCol1 = (int)this.Position.X / map.TileWidth;
+                int tempCol2 = (int)(this.Position.X + this.TextureWidth) / map.TileWidth;
+                int tempRol1 = (int)(this.Position.Y + this.StepSize + this.TextureHeight) / map.TileHeight;
+                if (CollisionHandler.IsTileSteppable(tempRol1, tempCol1, map) && CollisionHandler.IsTileSteppable(tempRol1, tempCol2, map))
+                    this.IncrementY(this.StepSize);
             }
         }
 
